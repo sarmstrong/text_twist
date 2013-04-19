@@ -1,0 +1,86 @@
+// Global Foundation Settings
+@import "settings";
+@import "compass/css3";
+
+// Comment out this import if you are customizing you imports below
+@import "foundation";
+
+body {
+	
+	background: #eee;
+
+}
+
+.wrapper {
+	
+
+	margin-top: 20px;
+
+
+}
+
+.row .row {
+	
+	margin-bottom: 10px
+
+}
+
+
+// MODULE InputPanel
+
+.inset-square {
+	
+	border: 2px solid #ccc;
+
+	background: white; 
+
+	padding-top: 20px;
+
+	padding-bottom: 20px; 
+
+	font-size: 2em; 
+
+	text-align: center;
+
+	@include box-shadow(inset -1px -1px 3px rgba(0,0,0,0.5));
+
+}
+
+// MODULE SetPanel
+
+.circle-text {
+	
+
+	@include border-radius(1000px); 
+
+	font-size: 2em; 
+
+	background: #666; 
+
+	color: white;
+
+	padding: 22px 20px; 
+
+	text-align: center;
+
+	width: 100%;
+
+}
+
+// MODULE SetMessages
+
+#messagePanel {
+	
+	margin-top: 10px
+
+}
+
+.message {
+	
+	font-size : 1.5em;
+
+	margin: 0
+
+}
+
+

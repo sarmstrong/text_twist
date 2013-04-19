@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Text Twist</title>
+    <link rel="stylesheet" href="stylesheets/app.css">
+  </head>
+
+  <body>
+
+
+
+    <div class='wrapper' id='app'>
+
+    </div>
+
+
+    <!-- scripts-->
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.10/backbone-min.js"></script>
+
+    <script src="http://marionettejs.com/downloads/backbone.marionette.min.js"></script>
+
+    <script src='app/letter_sets.js'></script>
+
+  
+
+    <script type="text/template" id='appLayout'>
+
+      <div class='row'>
+
+        <div id='answers' class='columns large-4'></div>
+
+        <div class='columns large-8'>
+
+
+
+          <div class='row'> 
+
+            <div id='inputPanel' ></div>
+
+          </div>
+
+          <div class='row'> 
+
+            <div id='currentSetPanel' ></div>
+
+          </div>
+
+          <div class='row'>
+
+            <div id='messagePanel' ></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      
+
+    </script>
+
+    <script type='text/template' id='inputPanelTempl'>
+
+      <div class='row'>
+
+            <% for (var i = 0 ; i < 6 ; i++) { 
+
+              if (user_input.split("")[i] !== undefined) { %>
+
+                  <div class='inset-square columns small-2'><%= user_input.split("")[i] %></div>
+
+              <% } else { %>
+
+                  <div class='inset-square columns small-2'>&nbsp;</div>
+
+              <% } %>
+
+            <% } %>
+
+      </div>
+
+
+    </script>
+
+    <script type="text/template" id='currentSetPanelTempl'>
+
+        <% var opts = _.shuffle(options) ; 
+
+           _.map(opts , function(l) {  %>
+
+          <div class=' columns small-2'><div class="circle-text"><%= l %></div></div>
+
+        <% }) %>
+
+
+    </script>
+
+    <script type='text/template' id='messageTempl'>
+
+      <p class='message'></p>
+
+    </script>
+
+    <script src="app/app.js"></script>
+
+  </body>
+</html>

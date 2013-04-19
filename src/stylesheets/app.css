@@ -5093,19 +5093,18 @@ body {
 }
 
 /* line 31, ../scss/app.scss */
-.inset-square {
-  border: 2px solid #ccc;
-  background: white;
+.rules span {
+  border-bottom: 2px solid #333;
+  width: 100%;
+  display: block;
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 5px;
   font-size: 2em;
   text-align: center;
-  -webkit-box-shadow: inset -1px -1px 3px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset -1px -1px 3px rgba(0, 0, 0, 0.5);
-  box-shadow: inset -1px -1px 3px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
 }
 
-/* line 51, ../scss/app.scss */
+/* line 55, ../scss/app.scss */
 .circle-text {
   -webkit-border-radius: 1000px;
   -moz-border-radius: 1000px;
@@ -5120,13 +5119,21 @@ body {
   width: 100%;
 }
 
-/* line 72, ../scss/app.scss */
+/* line 76, ../scss/app.scss */
 #messagePanel {
   margin-top: 10px;
 }
 
-/* line 78, ../scss/app.scss */
+/* line 82, ../scss/app.scss */
 .message {
   font-size: 1.5em;
   margin: 0;
+}
+
+/* line 92, ../scss/app.scss */
+.squares {
+  border: 1px solid #ccc;
+  font-size: 1.5em;
+  margin-bottom: 3px;
+  padding: 5px 0;
 }

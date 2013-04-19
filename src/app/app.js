@@ -98,6 +98,8 @@
 
 			} , 
 
+			// Render layout on app initialization
+
 			onRender : function() { 
 
 				this.current_set.show(new MyApp.Views.CurrentSetView({model : MyApp.current_set}));
@@ -105,6 +107,8 @@
 				this.input_panel.show(new MyApp.Views.InputView({model: MyApp.current_set}));
 
 				this.messages.show(new MyApp.Views.MessageView({model: MyApp.current_set})); 
+
+				this.answers.show(new MyApp.Views.AnswersView({collection : MyApp.answers})); 
 
 			}
 
@@ -143,7 +147,9 @@
 
 				this.model.on("change:user_input" , this.clearMessage , this) ;
 
-				this.model.on("invalid" , this.showError , this)
+				this.model.on("invalid" , this.showError , this); 
+
+				MyApp.vent.on("wrong_answer" , this.showBadAnswer , this); 
 
 			} , 
 
@@ -169,9 +175,55 @@
 
 				this.ui.message_txt.html(model.validationError);
 
+			} , 
+
+			showBadAnswer : function(e) {
+
+				this.$el.addClass("alert-box alert round")
+
+				this.ui.message_txt.html(e);			
+
 			}
 
 
+
+		}); 
+
+		Views.AnswerItem = Backbone.Marionette.ItemView.extend({
+
+			//Initial Item Template, will not show answer obviously
+
+			template : "#answerTemplInit" , 
+
+			initialize : function() { 
+
+				this.model.on("change:solved" , this.solve , this); 
+
+			} , 
+
+			// Re-render view and show the answer
+
+			solve : function() { 
+
+				console.log("solve");
+
+				this.template = "#answerTemplSolved"; 
+
+				this.render();
+
+			}
+
+		})
+
+		Views.AnswersView = Backbone.Marionette.CollectionView.extend({
+
+			itemView : Views.AnswerItem ,
+
+			initialize : function(options) {
+
+				console.log("hello world");
+
+			}
 
 		})
 
@@ -186,21 +238,27 @@
 
 			MyApp.current_set = new MyApp.Sets.CurrentSet(); 
 
-			$("body").on("keypress" , this.handleKeyboard); 
+			MyApp.answers = new MyApp.Sets.Answers();
+
+			$("body").on("keydown" , this.handleKeyboard); 
 
 		} , 
 
 		start: function() { 
 
-			//var keyboard = new MyApp.Layout.Keyboard();
-
-			
+			// Randomize which set is chosen
 
 			var rand_num = Math.floor(Math.random() * 2);
 
+			// Set the current set model data
+
 			MyApp.current_set.set(LETTER_CHOICES[rand_num]);
 
-			//MyApp.current_set.set({set : "Hello World"});
+			// Add the anwers to the answer collection
+
+			var sorted = _.sortBy(LETTER_CHOICES[rand_num].set , function( obj ) {return obj.a.length});
+
+			MyApp.answers.add(sorted);
 
 			var layout = new MyApp.Layout.App(); 
 
@@ -210,11 +268,51 @@
 
 		handleKeyboard : function(e) { 
 
-			var key = String.fromCharCode(e.charCode).toLowerCase();
+			var key = String.fromCharCode(e.keyCode).toLowerCase();
 
 			var ENTER_KEY = 13; 
 
-			if (e.charCode === 13) {
+			var BACKSPACE_KEY = 8;
+
+			var DELETE_KEY = 46; 
+
+			if (e.keyCode === ENTER_KEY) {
+
+				e.preventDefault();
+
+				var check_answers = MyApp.answers.where({a : MyApp.current_set.get("user_input")}); 
+
+				if (check_answers[0] !== undefined) { 
+
+					check_answers[0].set({solved : true});
+
+					MyApp.current_set.set({"user_input" : ""});
+
+				} else {
+
+					MyApp.vent.trigger("wrong_answer" , "That answer is incorrect.");
+
+				}
+
+			} else if (e.keyCode === ( BACKSPACE_KEY || DELETE_KEY)) {
+
+				e.preventDefault();
+
+				//console.log(MyApp.current_set.get("user_input"));
+
+				var user_input = MyApp.current_set.get("user_input"); 
+
+				if (user_input !== "") {
+
+					var current_input = user_input.split("");
+
+					current_input.splice(current_input.length - 1 , 1); 
+
+					MyApp.current_set.set({"user_input" : current_input.join("")});
+
+				}
+
+				
 
 			} else {
 

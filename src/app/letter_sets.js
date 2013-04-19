@@ -1,8 +1,8 @@
 var LETTER_CHOICES = [
 
-	{options : ['o' , 'o' , 's' , 'c' , 'h' , 'l']  , set : ['school' , 'cholo' , 'cool' , 'cos' ,'ooh' ,  'loch' , 'locos' , 'so']} , 
+	{options : ['o' , 'o' , 's' , 'c' , 'h' , 'l']  , set : [ {a :'school' } , {a : 'cholo' } , {a : 'cool'} , {a : 'cos' }, {a : 'ooh' } ,  {a : 'loch' } , {a : 'locos'} , {a : 'so'} ]} , 
 
-	{options : ['b' ,'e' , 't' , 't' , 'e' , 'r' ] , set : ['better' , 'beret' , 'beer' , 'bree' ,'beet' ,  'tree' , 'bee' , 'ere' , 'tee', 'be']}
+	{options : ['b' ,'e' , 't' , 't' , 'e' , 'r' ] , set : [{a: 'better' }, {a : 'beret' } , {a : 'beer' } , {a : 'bree' } , {a : 'beet' } ,  {a : 'tree' } , {a : 'bee' } , {a : 'ere' } , {a : 'tee' }, {a: 'bet'} , {a : 'be'} ]}
 	
 
 ];

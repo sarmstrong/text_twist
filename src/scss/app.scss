@@ -28,21 +28,25 @@ body {
 
 // MODULE InputPanel
 
-.inset-square {
+.rules span {
 	
-	border: 2px solid #ccc;
+	border-bottom: 2px solid #333;
 
-	background: white; 
+	width: 100%;
+
+	//background: white; 
+
+	display: block;
 
 	padding-top: 20px;
 
-	padding-bottom: 20px; 
+	padding-bottom: 5px; 
 
 	font-size: 2em; 
 
 	text-align: center;
 
-	@include box-shadow(inset -1px -1px 3px rgba(0,0,0,0.5));
+	margin-bottom: 20px
 
 }
 
@@ -77,9 +81,25 @@ body {
 
 .message {
 	
-	font-size : 1.5em;
+	font-size : 1.5em ;
 
 	margin: 0
+
+}
+
+// MODULE AnwersSet
+
+.squares {
+	
+	border : 1px solid #ccc; 
+
+	font-size: 1.5em ; 
+
+	margin-bottom: 3px;
+
+	padding: 5px 0 ;
+
+
 
 }
 

@@ -1,0 +1,1 @@
+An implemnetation of the classic Text Twist game using Backbone and Marionette

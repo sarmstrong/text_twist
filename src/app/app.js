@@ -266,6 +266,8 @@
 
 		} , 
 
+		// Handles keyboard loging
+
 		handleKeyboard : function(e) { 
 
 			var key = String.fromCharCode(e.keyCode).toLowerCase();
@@ -276,6 +278,9 @@
 
 			var DELETE_KEY = 46; 
 
+			// Checks to see if answer is correct
+			// If not it dispatches a global wrong answer event
+
 			if (e.keyCode === ENTER_KEY) {
 
 				e.preventDefault();
@@ -283,6 +288,9 @@
 				var check_answers = MyApp.answers.where({a : MyApp.current_set.get("user_input")}); 
 
 				if (check_answers[0] !== undefined) { 
+
+					// Set the attribute of the answer model to solved
+					// Will trigger a change event on corresponding view
 
 					check_answers[0].set({solved : true});
 
@@ -294,11 +302,12 @@
 
 				}
 
+			// Override functionality of delete/backspace key
+			// so they erase current input
+
 			} else if (e.keyCode === ( BACKSPACE_KEY || DELETE_KEY)) {
 
 				e.preventDefault();
-
-				//console.log(MyApp.current_set.get("user_input"));
 
 				var user_input = MyApp.current_set.get("user_input"); 
 
@@ -330,8 +339,6 @@
 	MyApp.addInitializer(function() { 
 
 		var controller = new MyApp.Controller();
-
-
 
 		controller.start(); 
 

@@ -16,7 +16,7 @@
 
 			} , 
 
-			validate : function(attrs, options) {
+			validate : function(attrs) {
 
 				// Validates to see if user input matches the 
 				// available set
@@ -26,19 +26,19 @@
 				var temp_arr = _.clone(attrs.user_input.split(''));
 
 				for (var i = 0 ; i < attrs.user_input.split('').length ; i++) { 
-				  
-				  for (var x = 0 ; x < arr2.length ; x++) { 
-				   
-				    if (temp_arr.indexOf(arr2[x]) !== -1) { 
-				      
-				      temp_arr.splice(temp_arr.indexOf(arr2[x]) , 1);
-				      
-				      arr2.splice(x , 1);
-				      
-				    }
-				    
-				  }
-  
+
+					for (var x = 0 ; x < arr2.length ; x++) { 
+
+						if (temp_arr.indexOf(arr2[x]) !== -1) { 
+
+							temp_arr.splice(temp_arr.indexOf(arr2[x]) , 1);
+
+						arr2.splice(x , 1);
+
+						}
+
+					}
+
 				}
 
 				if (temp_arr.length !== 0 ) {
@@ -112,7 +112,7 @@
 
 			}
 
-		})
+		});
 
 
 	});
@@ -137,7 +137,7 @@
 
 			template : "#currentSetPanelTempl" 
 
-		})
+		});
 
 		Views.MessageView = Backbone.Marionette.ItemView.extend({
 
@@ -163,7 +163,7 @@
 
 				//console.log(this);
 
-				this.$el.removeClass("alert-box alert round")
+				this.$el.removeClass("alert-box alert round");
 
 				this.ui.message_txt.html("");
 
@@ -171,7 +171,7 @@
 
 			showError : function(model) { 
 
-				this.$el.addClass("alert-box alert round")
+				this.$el.addClass("alert-box alert round");
 
 				this.ui.message_txt.html(model.validationError);
 
@@ -179,7 +179,7 @@
 
 			showBadAnswer : function(e) {
 
-				this.$el.addClass("alert-box alert round")
+				this.$el.addClass("alert-box alert round");
 
 				this.ui.message_txt.html(e);			
 
@@ -213,7 +213,7 @@
 
 			}
 
-		})
+		});
 
 		Views.AnswersView = Backbone.Marionette.CollectionView.extend({
 
@@ -225,7 +225,7 @@
 
 			}
 
-		})
+		});
 
 
 	});
@@ -256,7 +256,7 @@
 
 			// Add the anwers to the answer collection
 
-			var sorted = _.sortBy(LETTER_CHOICES[rand_num].set , function( obj ) {return obj.a.length});
+			var sorted = _.sortBy(LETTER_CHOICES[rand_num].set , function( obj ) {return obj.a.length;});
 
 			MyApp.answers.add(sorted);
 
@@ -318,14 +318,14 @@
 
 				var current_set = MyApp.current_set.get("user_input");
 
-				var success = MyApp.current_set.set({user_input : (current_set += key)} , {validate : true}); 
+				MyApp.current_set.set({user_input : (current_set += key)} , {validate : true}); 
 
 			}
 
 		}
 
 
-	})
+	});
 
 	MyApp.addInitializer(function() { 
 
@@ -337,7 +337,7 @@
 
 
 
-	})
+	});
 
 
 	MyApp.start();
@@ -346,5 +346,5 @@
 
 
 
-})(jQuery, _ , Backbone , Backbone.Marionette)
+})(jQuery, _ , Backbone , Backbone.Marionette);
 

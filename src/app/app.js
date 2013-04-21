@@ -116,6 +116,7 @@
 		});
 
 
+
 	});
 
 
@@ -248,52 +249,21 @@
 
 		});
 
+		Views.KeyboardContainer = Backbone.Marionette.ItemView.extend({
 
-	});
+			initialize : function() { 
 
+				console.log(this.el);
 
-	
-	MyApp.Controller = Marionette.Controller.extend({
+			}, 
 
-		initialize : function() { 
+			events : {
 
-			MyApp.current_set = new MyApp.Sets.CurrentSet(); 
+				'keydown' : "handleKeyboard"
 
-			MyApp.answers = new MyApp.Sets.Answers();
+			}, 
 
-			$("body").on("keydown" , this.handleKeyboard); 
-
-			MyApp.vent.on("reset" ,  this.start, this);
-
-		} , 
-
-		start: function() { 
-
-			// Randomize which set is chosen
-
-			var rand_num = Math.floor(Math.random() * 2);
-
-			// Set the current set model data
-
-			MyApp.current_set.set({user_input : ""});
-
-			MyApp.current_set.set(LETTER_CHOICES[rand_num]);
-
-			// Add the anwers to the answer collection
-
-			var sorted = _.sortBy(LETTER_CHOICES[rand_num].set , function( obj ) {return obj.a.length;});
-
-			MyApp.answers.reset(sorted);
-
-			var layout = new MyApp.Layout.App(); 
-
-			layout.render();
-
-		} , 
-
-
-
-		// Handles keyboard loging
+			// Handles keyboard loging
 
 		handleKeyboard : function(e) { 
 
@@ -361,6 +331,58 @@
 
 		}
 
+
+
+
+		}); 
+
+
+	});
+
+
+	
+	MyApp.Controller = Marionette.Controller.extend({
+
+		initialize : function() { 
+
+			MyApp.current_set = new MyApp.Sets.CurrentSet(); 
+
+			MyApp.answers = new MyApp.Sets.Answers();
+
+			//$("body").on("keydown" , this.handleKeyboard); 
+
+			MyApp.vent.on("reset" ,  this.start, this);
+
+			//var container = new MyApp.Layout.GameContainer({el : "body"});
+
+			var container = new MyApp.Views.KeyboardContainer({el : "body"});
+
+		} , 
+
+		start: function() { 
+
+			// Randomize which set is chosen
+
+			var rand_num = Math.floor(Math.random() * 2);
+
+			// Set the current set model data
+
+			MyApp.current_set.set({user_input : ""});
+
+			MyApp.current_set.set(LETTER_CHOICES[rand_num]);
+
+			// Add the anwers to the answer collection
+
+			var sorted = _.sortBy(LETTER_CHOICES[rand_num].set , function( obj ) {return obj.a.length;});
+
+			MyApp.answers.reset(sorted);
+
+			var layout = new MyApp.Layout.App();
+
+			layout.render();	
+
+		}
+		
 
 	});
 

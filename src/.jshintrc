@@ -1,0 +1,9 @@
+{
+	
+	"latedef" : true, 
+	"newcap" : true, 
+	"undef" : true, 
+	"unused" : true, 
+	"indent" : true
+
+}

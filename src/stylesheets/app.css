@@ -5137,3 +5137,8 @@ body {
   margin-bottom: 3px;
   padding: 5px 0;
 }
+
+/* line 104, ../scss/app.scss */
+.button {
+  width: 100%;
+}

@@ -1,3 +1,6 @@
+/* global LETTER_CHOICES, console, jQuery, Backbone, _ */
+
+
 (function($ , _ , Backbone , Marionette) { 
 
 
@@ -33,7 +36,7 @@
 
 							temp_arr.splice(temp_arr.indexOf(arr2[x]) , 1);
 
-						arr2.splice(x , 1);
+							arr2.splice(x , 1);
 
 						}
 
@@ -88,21 +91,19 @@
 
 				current_set : "#currentSetPanel" , 
 
-				messages : "#messagePanel"
+				messages : "#messagePanel", 
 
-			} , 
+				control_panel : "#controlPanel"
 
-			initialize : function() {
-
-
-
-			} , 
+			} ,  
 
 			// Render layout on app initialization
 
 			onRender : function() { 
 
 				this.current_set.show(new MyApp.Views.CurrentSetView({model : MyApp.current_set}));
+
+				this.control_panel.show(new MyApp.Views.CPanel());
 
 				this.input_panel.show(new MyApp.Views.InputView({model: MyApp.current_set}));
 
@@ -189,6 +190,32 @@
 
 		}); 
 
+		Views.CPanel = Backbone.Marionette.ItemView.extend({
+
+			template : "#controlPanelTempl", 
+
+			ui : {
+
+				reset : ".reset"
+
+			} , 
+
+			events : {
+
+				"click .reset" : "resetGame"
+
+			} , 
+
+			resetGame : function() { 
+
+				//console.log(MyApp);
+
+				MyApp.vent.trigger("reset");
+
+			}
+
+		}); 
+
 		Views.AnswerItem = Backbone.Marionette.ItemView.extend({
 
 			//Initial Item Template, will not show answer obviously
@@ -217,13 +244,7 @@
 
 		Views.AnswersView = Backbone.Marionette.CollectionView.extend({
 
-			itemView : Views.AnswerItem ,
-
-			initialize : function(options) {
-
-				console.log("hello world");
-
-			}
+			itemView : Views.AnswerItem
 
 		});
 
@@ -242,6 +263,8 @@
 
 			$("body").on("keydown" , this.handleKeyboard); 
 
+			MyApp.vent.on("reset" ,  this.start, this);
+
 		} , 
 
 		start: function() { 
@@ -252,19 +275,23 @@
 
 			// Set the current set model data
 
+			MyApp.current_set.set({user_input : ""});
+
 			MyApp.current_set.set(LETTER_CHOICES[rand_num]);
 
 			// Add the anwers to the answer collection
 
 			var sorted = _.sortBy(LETTER_CHOICES[rand_num].set , function( obj ) {return obj.a.length;});
 
-			MyApp.answers.add(sorted);
+			MyApp.answers.reset(sorted);
 
 			var layout = new MyApp.Layout.App(); 
 
 			layout.render();
 
 		} , 
+
+
 
 		// Handles keyboard loging
 
@@ -279,6 +306,7 @@
 			var DELETE_KEY = 46; 
 
 			// Checks to see if answer is correct
+
 			// If not it dispatches a global wrong answer event
 
 			if (e.keyCode === ENTER_KEY) {
@@ -341,8 +369,6 @@
 		var controller = new MyApp.Controller();
 
 		controller.start(); 
-
-
 
 	});
 

@@ -141,7 +141,7 @@
 
 			initialize : function() { 
 
-				this.model.on("change:options" , this.render)
+				this.model.on("change:options" , this.render);
 
 			}
 
@@ -309,7 +309,7 @@
 
 					} else {
 
-						timer.updateTime(duration)
+						timer.updateTime(duration);
 
 					}
 
@@ -328,7 +328,7 @@
 
 				minutes = Math.floor(duration/60);
 
-				seconds = String("0" + duration%60).slice(-2)
+				seconds = String("0" + duration%60).slice(-2);
 
 				minutes > 0 ? time_left = minutes + ":" + seconds : time_left = seconds;
 

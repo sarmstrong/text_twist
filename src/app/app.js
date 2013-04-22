@@ -137,7 +137,13 @@
 
 		Views.CurrentSetView = Backbone.Marionette.ItemView.extend({
 
-			template : "#currentSetPanelTempl" 
+			template : "#currentSetPanelTempl"  , 
+
+			initialize : function() { 
+
+				this.model.on("change:options" , this.render)
+
+			}
 
 		});
 
@@ -193,27 +199,51 @@
 
 		Views.CPanel = Backbone.Marionette.ItemView.extend({
 
-			template : "#controlPanelTempl", 
+			template : "#controlPanelTempl",
 
 			ui : {
 
-				reset : ".reset"
+				reset : ".reset", 
+
+				timer : ".timer", 
+
+				twist : ".twist"
 
 			} , 
 
 			events : {
 
-				"click .reset" : "resetGame"
+				"click .reset" : "resetGame", 
+
+				'click .twist' : "twist"
 
 			} , 
 
 			resetGame : function() { 
 
-				//console.log(MyApp);
-
 				MyApp.vent.trigger("reset");
 
+			} , 
+
+			onRender : function() { 
+
+				this.timer = new MyApp.Views.Timer({el : this.$("#timer"), duration: 300});
+
+				this.timer.render();
+
+			} , 
+
+			twist : function() { 
+
+				var opts = MyApp.current_set.get("options"); 
+
+				var shuffled = _.shuffle(opts); 
+
+				MyApp.current_set.set({options : shuffled});
+
 			}
+
+
 
 		}); 
 
@@ -233,8 +263,6 @@
 
 			solve : function() { 
 
-				console.log("solve");
-
 				this.template = "#answerTemplSolved"; 
 
 				this.render();
@@ -243,11 +271,80 @@
 
 		});
 
+		Views.Timer = Backbone.Marionette.ItemView.extend({
+
+			template : "#timerTempl" , 
+
+			initialize : function(options) { 
+
+				this.duration = options.duration;
+
+				this.startTimer();
+
+			} , 
+
+			ui : {
+
+				time : ".time"
+
+			} , 
+
+			startTimer : function() {
+
+				var app, timer , duration;
+
+				app = MyApp;
+
+				timer = this;
+
+				duration = this.duration;
+
+				this.intvl = setInterval(function() { 
+
+					if (duration < 0) {
+
+						clearInterval(timer.intvl); 
+
+						app.vent.trigger("timeUp");
+
+					} else {
+
+						timer.updateTime(duration)
+
+					}
+
+					duration--;
+
+				} , 1000); 
+
+
+			} , 
+
+			updateTime : function(duration) { 
+
+				var minutes, seconds, time_left;
+
+				// Add time to time element and pad with a Zero
+
+				minutes = Math.floor(duration/60);
+
+				seconds = String("0" + duration%60).slice(-2)
+
+				minutes > 0 ? time_left = minutes + ":" + seconds : time_left = seconds;
+
+				this.ui.time.html(time_left);
+
+
+			} 
+
+		}); 
+
 		Views.AnswersView = Backbone.Marionette.CollectionView.extend({
 
 			itemView : Views.AnswerItem
 
 		});
+
 
 		Views.KeyboardContainer = Backbone.Marionette.ItemView.extend({
 
@@ -265,74 +362,45 @@
 
 			// Handles keyboard loging
 
-		handleKeyboard : function(e) { 
+			handleKeyboard : function(e) { 
 
-			var key = String.fromCharCode(e.keyCode).toLowerCase();
+				var key = String.fromCharCode(e.keyCode).toLowerCase();
 
-			var ENTER_KEY = 13; 
+				var ENTER_KEY = 13; 
 
-			var BACKSPACE_KEY = 8;
+				var BACKSPACE_KEY = 8;
 
-			var DELETE_KEY = 46; 
+				var DELETE_KEY = 46; 
 
-			// Checks to see if answer is correct
+				var COMMAND_KEY = 91;
 
-			// If not it dispatches a global wrong answer event
+				if (e.keyCode === ENTER_KEY) {
 
-			if (e.keyCode === ENTER_KEY) {
+					e.preventDefault();
 
-				e.preventDefault();
+					MyApp.vent.trigger("checkAnswer");			
 
-				var check_answers = MyApp.answers.where({a : MyApp.current_set.get("user_input")}); 
+					// Override functionality of delete/backspace key
 
-				if (check_answers[0] !== undefined) { 
+					// so they erase current input
 
-					// Set the attribute of the answer model to solved
-					// Will trigger a change event on corresponding view
+				} else if (e.keyCode === ( BACKSPACE_KEY || DELETE_KEY)) {
 
-					check_answers[0].set({solved : true});
+					e.preventDefault();
 
-					MyApp.current_set.set({"user_input" : ""});
+					MyApp.vent.trigger("deleteInput");
+
+				} else if (e.keyCode === COMMAND_KEY) {
+
+					/// ignore
 
 				} else {
 
-					MyApp.vent.trigger("wrong_answer" , "That answer is incorrect.");
+					MyApp.vent.trigger("validateInput" , key);
 
 				}
-
-			// Override functionality of delete/backspace key
-			// so they erase current input
-
-			} else if (e.keyCode === ( BACKSPACE_KEY || DELETE_KEY)) {
-
-				e.preventDefault();
-
-				var user_input = MyApp.current_set.get("user_input"); 
-
-				if (user_input !== "") {
-
-					var current_input = user_input.split("");
-
-					current_input.splice(current_input.length - 1 , 1); 
-
-					MyApp.current_set.set({"user_input" : current_input.join("")});
-
-				}
-
-				
-
-			} else {
-
-				var current_set = MyApp.current_set.get("user_input");
-
-				MyApp.current_set.set({user_input : (current_set += key)} , {validate : true}); 
 
 			}
-
-		}
-
-
-
 
 		}); 
 
@@ -349,17 +417,27 @@
 
 			MyApp.answers = new MyApp.Sets.Answers();
 
-			//$("body").on("keydown" , this.handleKeyboard); 
-
 			MyApp.vent.on("reset" ,  this.start, this);
 
-			//var container = new MyApp.Layout.GameContainer({el : "body"});
+			MyApp.vent.on("timeUp" , this.start , this);
 
-			var container = new MyApp.Views.KeyboardContainer({el : "body"});
+			MyApp.vent.on("score:current" , this.currentScore , this); 
+
+			MyApp.vent.on("checkAnswer", this.checkAnswer , this);
+
+			MyApp.vent.on("deleteInput", this.deleteInput , this);
+
+			MyApp.vent.on("validateInput", this.validateInput , this);
+
+			new MyApp.Views.KeyboardContainer({el : "body"});
+
+
 
 		} , 
 
 		start: function() { 
+
+			this.current_score = 0; 
 
 			// Randomize which set is chosen
 
@@ -380,6 +458,78 @@
 			var layout = new MyApp.Layout.App();
 
 			layout.render();	
+
+		} , 
+
+		updateCurrentScore : function() { 
+
+			var solved = MyApp.answers.where({solved : true}); 
+
+			console.log(solved.length);
+
+			console.log(MyApp.answers.length);
+
+			if (solved.length === MyApp.answers.length) {
+
+				alert("Great Job, Game Solved"); 
+
+				this.start();
+
+			}
+
+		} , 
+
+		// Checks to see if answer is correct
+
+		// If not it dispatches a global wrong answer event
+
+		checkAnswer : function() { 
+
+			var check_answers = MyApp.answers.where({a : MyApp.current_set.get("user_input")}); 
+
+			if (check_answers[0] !== undefined) { 
+
+				// Set the attribute of the answer model to solved
+
+				// Will trigger a change event on corresponding view
+
+				check_answers[0].set({solved : true});
+
+				MyApp.current_set.set({"user_input" : ""});
+
+				this.updateCurrentScore();
+
+
+			} else {
+
+				MyApp.vent.trigger("wrong_answer" , "That answer is incorrect.");
+
+			}
+
+		} , 
+
+
+		deleteInput : function() { 
+
+			var user_input = MyApp.current_set.get("user_input"); 
+
+			if (user_input !== "") {
+
+				var current_input = user_input.split("");
+
+				current_input.splice(current_input.length - 1 , 1); 
+
+				MyApp.current_set.set({"user_input" : current_input.join("")});
+
+			}
+
+		} , 
+
+		validateInput : function(key) { 
+
+			var current_set = MyApp.current_set.get("user_input");
+
+			MyApp.current_set.set({user_input : (current_set += key)} , {validate : true}); 
 
 		}
 		

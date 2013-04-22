@@ -55,8 +55,6 @@ body {
 .circle-text {
 	
 
-	@include border-radius(1000px); 
-
 	font-size: 2em; 
 
 	background: #666; 
@@ -104,6 +102,19 @@ body {
 .button {
 	
 	width: 100%;
+
+}
+
+.time {
+	
+	font-size: 1.2em;
+
+	border-bottom: 1px solid #ccc;
+
+	font-weight: bold;
+
+	text-align: right;
+
 
 }
 

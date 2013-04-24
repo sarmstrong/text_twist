@@ -15,7 +15,9 @@
 
 			defaults : {
 
-				user_input : ''
+				user_input : '' , 
+
+				options : ''
 
 			} , 
 
@@ -77,11 +79,21 @@
 
 		// Renders the layout for the application
 
-		Layout.App = Backbone.Marionette.Layout.extend({
+		Layout.GameInterface = Backbone.Marionette.Layout.extend({
 
-			template : "#appLayout",
+			el : "#gameInterface" , 
 
-			el : ".wrapper",
+			template : "#interfaceLayout" , 
+
+			initialize : function() {
+
+				MyApp.vent.on("gameSolve" , this.hide , this);
+
+				MyApp.vent.on("timeUp" , this.hide , this);
+
+				MyApp.vent.on("playAgain" , this.show , this);
+
+			} ,
 
 			regions : {
 
@@ -93,11 +105,21 @@
 
 				messages : "#messagePanel", 
 
-				control_panel : "#controlPanel"
+				control_panel : "#controlPanel" , 
 
-			} ,  
+			} ,
 
-			// Render layout on app initialization
+			hide : function() { 
+
+				$(this.el).hide();
+
+			} , 
+
+			show : function() { 
+
+				$(this.el).show();
+
+			} , 
 
 			onRender : function() { 
 
@@ -112,6 +134,34 @@
 				this.answers.show(new MyApp.Views.AnswersView({collection : MyApp.answers})); 
 
 			}
+
+
+		}); 
+
+		Layout.App = Backbone.Marionette.Layout.extend({
+
+			template : "#appLayout",
+
+			el : ".wrapper" , 
+
+			regions : {
+
+				interface_layout : "#interfaceLayout" , 
+
+				end_screen: "#endScreen"
+
+			} ,  
+
+			// Render layout on app initialization
+
+			onRender : function() { 
+
+				this.interface_layout.show(new MyApp.Layout.GameInterface());
+
+				this.end_screen.show(new MyApp.Views.EndScreen());
+
+			} 
+
 
 		});
 
@@ -139,7 +189,7 @@
 
 			template : "#currentSetPanelTempl"  , 
 
-			initialize : function() { 
+			initialize : function(options) { 
 
 				this.model.on("change:options" , this.render);
 
@@ -199,7 +249,7 @@
 
 		Views.CPanel = Backbone.Marionette.ItemView.extend({
 
-			template : "#controlPanelTempl",
+			template : "#controlPanelTempl", 
 
 			ui : {
 
@@ -223,7 +273,7 @@
 
 				MyApp.vent.trigger("reset");
 
-			} , 
+			}  , 
 
 			onRender : function() { 
 
@@ -277,9 +327,17 @@
 
 			initialize : function(options) { 
 
-				this.duration = options.duration;
+				MyApp.vent.on("reset" ,  this.resetTimer, this);
 
-				this.startTimer();
+				MyApp.vent.on("gameSolve" ,  this.stopTimer, this);
+
+				MyApp.vent.on("timeUp" ,  this.stopTimer, this);
+
+				//MyApp.vent.on("playAgain" , this.startTimer , this);
+
+				MyApp.vent.on("gameStart" , this.startTimer , this);
+
+				this.duration = options.duration;
 
 			} , 
 
@@ -287,17 +345,39 @@
 
 				time : ".time"
 
+			} ,
+
+			resetTimer : function() { 
+
+				clearInterval(this.intvl);
+
+				this.startTimer();
+
+			} , 
+
+			stopTimer : function() { 
+
+				clearInterval(this.intvl);
+
 			} , 
 
 			startTimer : function() {
 
 				var app, timer , duration;
 
+				if (this.intvl !== undefined) {
+
+					clearInterval(this.intvl);
+
+				}
+
 				app = MyApp;
 
 				timer = this;
 
 				duration = this.duration;
+
+				this.updateTime(duration);
 
 				this.intvl = setInterval(function() { 
 
@@ -404,6 +484,60 @@
 
 		}); 
 
+		Views.EndScreen = Backbone.Marionette.ItemView.extend({
+
+			template : "#endScreenTempl" , 
+
+			initialize : function() {
+
+				MyApp.vent.on("gameSolve" , this.showSolved , this);
+
+				MyApp.vent.on("playAgain" , this.hide , this);
+
+				MyApp.vent.on("timeUp" , this.showUnsolved , this);
+
+				$(this.el).hide();
+
+			} ,
+
+
+			events : {
+
+				"click .play-again" : 'playAgain'
+
+			} , 
+
+			playAgain : function() { 
+
+				MyApp.vent.trigger("playAgain");
+
+			}, 
+
+			showSolved : function() {
+
+				$(this.el).removeClass('unsolved').addClass("solved");
+
+				$(this.el).show();
+
+			} , 
+
+			showUnsolved : function() { 
+
+				$(this.el).removeClass('solved').addClass("unsolved");
+
+				$(this.el).show();
+
+
+			} ,
+
+			hide : function() {
+
+				$(this.el).hide();
+
+			}
+
+		});
+
 
 	});
 
@@ -419,7 +553,7 @@
 
 			MyApp.vent.on("reset" ,  this.start, this);
 
-			MyApp.vent.on("timeUp" , this.start , this);
+			MyApp.vent.on("playAgain", this.start , this);
 
 			MyApp.vent.on("score:current" , this.currentScore , this); 
 
@@ -430,6 +564,10 @@
 			MyApp.vent.on("validateInput", this.validateInput , this);
 
 			new MyApp.Views.KeyboardContainer({el : "body"});
+
+			this.app_layout = new MyApp.Layout.App();
+
+			this.app_layout.render();
 
 
 
@@ -455,9 +593,9 @@
 
 			MyApp.answers.reset(sorted);
 
-			var layout = new MyApp.Layout.App();
+			MyApp.vent.trigger("gameStart");
 
-			layout.render();	
+				
 
 		} , 
 
@@ -471,9 +609,9 @@
 
 			if (solved.length === MyApp.answers.length) {
 
-				alert("Great Job, Game Solved"); 
+				MyApp.vent.trigger("gameSolve"); 
 
-				this.start();
+				//this.start();
 
 			}
 
@@ -541,6 +679,10 @@
 		var controller = new MyApp.Controller();
 
 		controller.start(); 
+
+		//controller.gameSolve();
+
+		//MyApp.vent.trigger("gameSolve");
 
 	});
 

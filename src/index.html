@@ -27,13 +27,31 @@
 
     <script src='app/letter_sets.js'></script>
 
+    <script type='text/template' id='appLayout'>
+
+      <div class='row' id='endScreen'>
+
+
+
+      </div>
+
+      <div class='row' id='gameInterface'>
+
+
+
+      </div>
+
+
+
+    </script>
+
   
 
-    <script type="text/template" id='appLayout'>
+    <script type="text/template" id='interfaceLayout'>
 
+      
 
-      <div class='row'>
-
+      
         <div id='answers' class='columns large-4'>
 
 
@@ -80,8 +98,6 @@
          
 
         </div>
-
-      </div>
 
       
 
@@ -178,13 +194,13 @@
 
           <div class='columns small-2' id='resetButton'>
 
-            <a class='reset button small'>Reset</a>
+            <a class='reset cpanel button small'>Reset</a>
 
           </div>
 
           <div class='columns small-2' id='pauseButton'>
 
-            <a class='twist button small'>Twist</a>
+            <a class='twist cpanel button small'>Twist</a>
 
           </div>
 
@@ -199,6 +215,20 @@
     <script type='text/template' id='timerTempl'>
 
       <p class='time'></p>
+
+    </script>
+
+    <script type='text/template' id='endScreenTempl'>
+
+      <div class='panel'>
+      
+        <h1 class='solved'>Great job, you won!</h1>
+
+        <h1 class='unsolved'>Sorry, Times up!</h1>
+
+        <a class='button play-again'>Play Again?</a>
+
+      </div>
 
     </script>
 

@@ -99,7 +99,7 @@ body {
 
 }
 
-.button {
+.cpanel.button {
 	
 	width: 100%;
 
@@ -115,6 +115,38 @@ body {
 
 	text-align: right;
 
+
+}
+
+.solved {
+	
+	.solved {
+
+		display: block;
+
+	}
+
+	.unsolved {
+
+		display: none; 
+
+	}
+
+}
+
+.unsolved {
+	
+	.solved {
+
+		display: none;
+
+	}
+
+	.unsolved {
+
+		display: block; 
+
+	}
 
 }
 

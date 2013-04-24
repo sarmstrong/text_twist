@@ -5134,7 +5134,7 @@ body {
 }
 
 /* line 102, ../scss/app.scss */
-.button {
+.cpanel.button {
   width: 100%;
 }
 
@@ -5144,4 +5144,22 @@ body {
   border-bottom: 1px solid #ccc;
   font-weight: bold;
   text-align: right;
+}
+
+/* line 123, ../scss/app.scss */
+.solved .solved {
+  display: block;
+}
+/* line 129, ../scss/app.scss */
+.solved .unsolved {
+  display: none;
+}
+
+/* line 139, ../scss/app.scss */
+.unsolved .solved {
+  display: none;
+}
+/* line 145, ../scss/app.scss */
+.unsolved .unsolved {
+  display: block;
 }

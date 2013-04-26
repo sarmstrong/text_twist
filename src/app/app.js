@@ -23,8 +23,11 @@
 
 			validate : function(attrs) {
 
-				// Validates to see if user input matches the 
-				// available set
+				// Validates to see if user input matches the available set.
+
+				// Looks in the options set and validates against user input
+
+
 
 				var arr2 = _.clone(attrs.options);
 
@@ -36,6 +39,10 @@
 
 						if (temp_arr.indexOf(arr2[x]) !== -1) { 
 
+							// Remove letters when a match is found in the User Input array
+
+							// and the options array
+
 							temp_arr.splice(temp_arr.indexOf(arr2[x]) , 1);
 
 							arr2.splice(x , 1);
@@ -46,9 +53,11 @@
 
 				}
 
-				if (temp_arr.length !== 0 ) {
+				// No letters should be remaining in the User Input array
 
-					//console.log("Not an option")
+				// If so, then those letters are not part of the options set
+
+				if (temp_arr.length !== 0 ) {
 
 					return "This letter is not an option";
 
@@ -59,11 +68,15 @@
 
 		});
 
+		// Perfunctory creation of a collection model
+
 		Sets.Answer = Backbone.Model.extend({
 
 
 
 		});
+
+		// Collection that will be used to store the answers set
 
 		Sets.Answers = Backbone.Collection.extend({
 
@@ -77,7 +90,7 @@
 
 	MyApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ , _) {
 
-		// Renders the layout for the application
+		// Renders the layout for the Game Interface
 
 		Layout.GameInterface = Backbone.Marionette.Layout.extend({
 
@@ -109,6 +122,8 @@
 
 			} ,
 
+			// Methods hide and show interface
+
 			hide : function() { 
 
 				$(this.el).hide();
@@ -138,6 +153,10 @@
 
 		}); 
 
+		// Main app layout
+
+		// Creates a nested interface layout and an "End Screen" layout
+
 		Layout.App = Backbone.Marionette.Layout.extend({
 
 			template : "#appLayout",
@@ -151,8 +170,6 @@
 				end_screen: "#endScreen"
 
 			} ,  
-
-			// Render layout on app initialization
 
 			onRender : function() { 
 
@@ -172,6 +189,7 @@
 
 	MyApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _) {
 
+		// Renders the users keyboard input
 
 		Views.InputView = Backbone.Marionette.ItemView.extend({
 
@@ -185,6 +203,8 @@
 
 		});
 
+		// Shows the current set of letters a user can choose from 
+
 		Views.CurrentSetView = Backbone.Marionette.ItemView.extend({
 
 			template : "#currentSetPanelTempl"  , 
@@ -196,6 +216,9 @@
 			}
 
 		});
+
+		// Shows messages that alert the user if there is a mistype
+		// or wrong answer
 
 		Views.MessageView = Backbone.Marionette.ItemView.extend({
 
@@ -247,6 +270,8 @@
 
 		}); 
 
+		// Top bar or Control Panel for app
+
 		Views.CPanel = Backbone.Marionette.ItemView.extend({
 
 			template : "#controlPanelTempl", 
@@ -283,6 +308,8 @@
 
 			} , 
 
+			/// Implements 'twist' functionality
+
 			twist : function() { 
 
 				var opts = MyApp.current_set.get("options"); 
@@ -297,9 +324,11 @@
 
 		}); 
 
+		// Renders answers in side bar
+
 		Views.AnswerItem = Backbone.Marionette.ItemView.extend({
 
-			//Initial Item Template, will not show answer obviously
+			//Initial Item Template, will not show answers obviously
 
 			template : "#answerTemplInit" , 
 
@@ -332,8 +361,6 @@
 				MyApp.vent.on("gameSolve" ,  this.stopTimer, this);
 
 				MyApp.vent.on("timeUp" ,  this.stopTimer, this);
-
-				//MyApp.vent.on("playAgain" , this.startTimer , this);
 
 				MyApp.vent.on("gameStart" , this.startTimer , this);
 
@@ -440,19 +467,21 @@
 
 			}, 
 
-			// Handles keyboard loging
+			// Handles keyboard logic
 
 			handleKeyboard : function(e) { 
 
-				var key = String.fromCharCode(e.keyCode).toLowerCase();
+				var key, ENTER_KEY , BACKSPACE_KEY , DELETE_KEY , COMMAND_KEY;
 
-				var ENTER_KEY = 13; 
+				key = String.fromCharCode(e.keyCode).toLowerCase();
 
-				var BACKSPACE_KEY = 8;
+				ENTER_KEY = 13; 
 
-				var DELETE_KEY = 46; 
+				BACKSPACE_KEY = 8;
 
-				var COMMAND_KEY = 91;
+				DELETE_KEY = 46; 
+
+				COMMAND_KEY = 91;
 
 				if (e.keyCode === ENTER_KEY) {
 
@@ -472,7 +501,7 @@
 
 				} else if (e.keyCode === COMMAND_KEY) {
 
-					/// ignore
+					/// Ignore typing of the command key because it's annoying
 
 				} else {
 
@@ -680,17 +709,10 @@
 
 		controller.start(); 
 
-		//controller.gameSolve();
-
-		//MyApp.vent.trigger("gameSolve");
-
 	});
 
 
 	MyApp.start();
-	
-
-
 
 
 })(jQuery, _ , Backbone , Backbone.Marionette);

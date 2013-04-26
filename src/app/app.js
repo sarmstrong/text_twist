@@ -27,8 +27,6 @@
 
 				// Looks in the options set and validates against user input
 
-
-
 				var arr2 = _.clone(attrs.options);
 
 				var temp_arr = _.clone(attrs.user_input.split(''));
@@ -97,6 +95,8 @@
 			el : "#gameInterface" , 
 
 			template : "#interfaceLayout" , 
+
+			/// Listen to app events to enable/disable layout when game ends/starts
 
 			initialize : function() {
 
@@ -228,9 +228,9 @@
 
 				this.model.on("change:user_input" , this.clearMessage , this) ;
 
-				this.model.on("invalid" , this.showError , this); 
+				this.model.on("invalid" , this.handleBadInput , this); 
 
-				MyApp.vent.on("wrong_answer" , this.showBadAnswer , this); 
+				MyApp.vent.on("wrong_answer" , this.handleBadAnswer , this); 
 
 			} , 
 
@@ -240,9 +240,9 @@
 
 			} ,
 
-			clearMessage : function() {
+			// Clear input when the user starts typing to validate new input
 
-				//console.log(this);
+			clearMessage : function() {
 
 				this.$el.removeClass("alert-box alert round");
 
@@ -250,23 +250,34 @@
 
 			} , 
 
-			showError : function(model) { 
+			// Shows errors in the message UI
+
+			showError : function(error) { 
 
 				this.$el.addClass("alert-box alert round");
 
-				this.ui.message_txt.html(model.validationError);
+				this.ui.message_txt.html(error);
 
 			} , 
 
-			showBadAnswer : function(e) {
+			// Shows error when a wrong answer has been submitted
 
-				this.$el.addClass("alert-box alert round");
+			handleBadAnswer : function(e) {
 
-				this.ui.message_txt.html(e);			
+				this.showError(e);	
+
+			} , 
+
+			// Shows error when the user trys to input a letter that
+			// is not in the current set
+
+			handleBadInput : function(model) {
+
+				console.log(model);
+
+				this.showError(model.validationError);
 
 			}
-
-
 
 		}); 
 

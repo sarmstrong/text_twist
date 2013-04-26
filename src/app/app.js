@@ -1,6 +1,5 @@
 /* global LETTER_CHOICES, console, jQuery, Backbone, _ */
 
-
 (function($ , _ , Backbone , Marionette) { 
 
 
@@ -118,7 +117,7 @@
 
 				messages : "#messagePanel", 
 
-				control_panel : "#controlPanel" , 
+				control_panel : "#controlPanel"
 
 			} ,
 
@@ -297,6 +296,8 @@
 
 			} , 
 
+			// Assings methods to reset and twist button
+
 			events : {
 
 				"click .reset" : "resetGame", 
@@ -311,6 +312,8 @@
 
 			}  , 
 
+			// Create a new timer on render that is defined in the cpanel markup
+
 			onRender : function() { 
 
 				this.timer = new MyApp.Views.Timer({el : this.$("#timer"), duration: 300});
@@ -324,6 +327,8 @@
 			twist : function() { 
 
 				var opts = MyApp.current_set.get("options"); 
+
+				// Use underscores shuffle method to randomize letter order
 
 				var shuffled = _.shuffle(opts); 
 
@@ -360,6 +365,8 @@
 			}
 
 		});
+
+		// Renders the game timer and handles related events
 
 		Views.Timer = Backbone.Marionette.ItemView.extend({
 
@@ -399,9 +406,13 @@
 
 			} , 
 
+			// Starts timer
+
 			startTimer : function() {
 
 				var app, timer , duration;
+
+				// Clears any currently running intervals
 
 				if (this.intvl !== undefined) {
 
@@ -415,6 +426,8 @@
 
 				duration = this.duration;
 
+				// Initializes the timer UI
+
 				this.updateTime(duration);
 
 				this.intvl = setInterval(function() { 
@@ -422,6 +435,10 @@
 					if (duration < 0) {
 
 						clearInterval(timer.intvl); 
+
+						// Triggers time up event
+
+						// Objects subscribing to this event will act accordingly
 
 						app.vent.trigger("timeUp");
 
@@ -438,6 +455,8 @@
 
 			} , 
 
+			// Updates the timer UI
+
 			updateTime : function(duration) { 
 
 				var minutes, seconds, time_left;
@@ -445,6 +464,8 @@
 				// Add time to time element and pad with a Zero
 
 				minutes = Math.floor(duration/60);
+
+				// Cool padding hack I found using my "Google Fu"
 
 				seconds = String("0" + duration%60).slice(-2);
 
@@ -455,7 +476,9 @@
 
 			} 
 
-		}); 
+		});
+
+		// Collection view that displays the answers to set 
 
 		Views.AnswersView = Backbone.Marionette.CollectionView.extend({
 
@@ -463,6 +486,7 @@
 
 		});
 
+		// Handles keyboard input
 
 		Views.KeyboardContainer = Backbone.Marionette.ItemView.extend({
 
@@ -494,6 +518,8 @@
 
 				COMMAND_KEY = 91;
 
+				// If enter key, then validate user input against current set
+
 				if (e.keyCode === ENTER_KEY) {
 
 					e.preventDefault();
@@ -516,6 +542,8 @@
 
 				} else {
 
+					/// Validate user input to see if it is in the current letter set
+
 					MyApp.vent.trigger("validateInput" , key);
 
 				}
@@ -524,15 +552,21 @@
 
 		}); 
 
+		// Shows wether game is solved or time is up
+
 		Views.EndScreen = Backbone.Marionette.ItemView.extend({
 
 			template : "#endScreenTempl" , 
 
 			initialize : function() {
 
+				// Shows game solved screen when the game is solved
+
 				MyApp.vent.on("gameSolve" , this.showSolved , this);
 
 				MyApp.vent.on("playAgain" , this.hide , this);
+
+				// Show the times up screen if the time runs out
 
 				MyApp.vent.on("timeUp" , this.showUnsolved , this);
 
@@ -553,6 +587,8 @@
 
 			}, 
 
+			/// Shows view if game is solved
+
 			showSolved : function() {
 
 				$(this.el).removeClass('unsolved').addClass("solved");
@@ -560,6 +596,8 @@
 				$(this.el).show();
 
 			} , 
+
+			/// Shows when time is up
 
 			showUnsolved : function() { 
 
@@ -581,7 +619,7 @@
 
 	});
 
-
+	// Controller handles game logic, updates views and models
 	
 	MyApp.Controller = Marionette.Controller.extend({
 
@@ -591,11 +629,13 @@
 
 			MyApp.answers = new MyApp.Sets.Answers();
 
+			// Starts new game on reset button press or when the user decides to play again
+
 			MyApp.vent.on("reset" ,  this.start, this);
 
-			MyApp.vent.on("playAgain", this.start , this);
+			MyApp.vent.on("playAgain", this.start , this); 
 
-			MyApp.vent.on("score:current" , this.currentScore , this); 
+			// Handles events triggered by the keyboard view
 
 			MyApp.vent.on("checkAnswer", this.checkAnswer , this);
 
@@ -603,27 +643,31 @@
 
 			MyApp.vent.on("validateInput", this.validateInput , this);
 
+			//  Create a key board view, may not be dependent on layout
+
 			new MyApp.Views.KeyboardContainer({el : "body"});
+
+			// Create the app layout and render it to the screen
 
 			this.app_layout = new MyApp.Layout.App();
 
 			this.app_layout.render();
 
-
-
 		} , 
 
-		start: function() { 
+		// Starts a new game
 
-			this.current_score = 0; 
+		start: function() {  
 
 			// Randomize which set is chosen
 
-			var rand_num = Math.floor(Math.random() * 2);
+			var rand_num = Math.floor(Math.random() * LETTER_CHOICES.length);
 
-			// Set the current set model data
+			// Reset the user input to empty
 
 			MyApp.current_set.set({user_input : ""});
+
+			// Set the current set model data
 
 			MyApp.current_set.set(LETTER_CHOICES[rand_num]);
 
@@ -634,24 +678,19 @@
 			MyApp.answers.reset(sorted);
 
 			MyApp.vent.trigger("gameStart");
-
-				
+			
 
 		} , 
+
+		// Checks to see if the game is solved
 
 		updateCurrentScore : function() { 
 
 			var solved = MyApp.answers.where({solved : true}); 
 
-			console.log(solved.length);
-
-			console.log(MyApp.answers.length);
-
 			if (solved.length === MyApp.answers.length) {
 
 				MyApp.vent.trigger("gameSolve"); 
-
-				//this.start();
 
 			}
 
@@ -662,6 +701,8 @@
 		// If not it dispatches a global wrong answer event
 
 		checkAnswer : function() { 
+
+			/// Check the answers collection to see if answer exists
 
 			var check_answers = MyApp.answers.where({a : MyApp.current_set.get("user_input")}); 
 
@@ -686,12 +727,15 @@
 
 		} , 
 
+		// Enables delete functionlity for keyboard input
 
 		deleteInput : function() { 
 
 			var user_input = MyApp.current_set.get("user_input"); 
 
 			if (user_input !== "") {
+
+				// Create an array from the user input and reduce it in length
 
 				var current_input = user_input.split("");
 
@@ -702,6 +746,8 @@
 			}
 
 		} , 
+
+		// Trigger on any keyboard input that isn't a submission or delete event
 
 		validateInput : function(key) { 
 
@@ -714,6 +760,8 @@
 
 	});
 
+	// Standard Marionette boilerplate code to initialize an app
+
 	MyApp.addInitializer(function() { 
 
 		var controller = new MyApp.Controller();
@@ -724,6 +772,8 @@
 
 
 	MyApp.start();
+
+
 
 
 })(jQuery, _ , Backbone , Backbone.Marionette);

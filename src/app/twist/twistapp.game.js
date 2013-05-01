@@ -1,6 +1,6 @@
 /* global TwistApp, LETTER_CHOICES, console, jQuery, Backbone, _ */
 
-TwistApp.module("Game" , function(Game , MyApp , Backbone , Marionette ) {
+TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ ) {
 
 
 	// Controller handles game logic, updates views and models
@@ -143,6 +143,8 @@ TwistApp.module("Game" , function(Game , MyApp , Backbone , Marionette ) {
 		
 
 	});
+
+	// Standard Marionette boilerplate code to initialize an app
 
 	Game.addInitializer(function() { 
 

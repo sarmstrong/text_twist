@@ -2,15 +2,9 @@
 
 var TwistApp = new Backbone.Marionette.Application();
 
-// Standard Marionette boilerplate code to initialize an app
+TwistApp.socketURL = 'http://localhost';
 
-// TwistApp.addInitializer(function() { 
 
-// 	var controller = new TwistApp.Game.Controller();
-
-// 	controller.start(); 
-
-// });
 
 
 

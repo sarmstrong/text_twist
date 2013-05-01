@@ -32,7 +32,9 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 
 				messages : "#messagePanel", 
 
-				control_panel : "#controlPanel"
+				control_panel : "#controlPanel", 
+
+				online : "#online"
 
 			} ,
 
@@ -61,6 +63,8 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 				this.messages.show(new MyApp.Views.MessageView({model: MyApp.current_set})); 
 
 				this.answers.show(new MyApp.Views.AnswersView({collection : MyApp.answers})); 
+
+				this.online.show(new MyApp.Views.PlayersOnline());
 
 			}
 

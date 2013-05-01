@@ -428,5 +428,20 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 		});
 
+		Views.PlayerItem = Backbone.Marionette.ItemView.extend({
+
+			template : "#playerItem"
+
+
+		});
+
+		Views.PlayersOnline = Backbone.Marionette.CollectionView.extend({
+
+			itemView : Views.PlayerItem
+
+		})
+
+
+
 
 	});

@@ -27,7 +27,13 @@
 
     <script src='app/letter_sets.js'></script>
 
+     <script src='/socket.io/socket.io.js'></script>
+
     <script type='text/template' id='appLayout'>
+
+      <header class='row' id='header'>
+
+      </header>
 
       <div class='row' id='endScreen'>
 
@@ -45,6 +51,20 @@
 
     </script>
 
+    <script type='text/template' id='headerLayout'>
+
+      <div class='user'>
+
+
+      </div>
+
+      <div class='scoreBoard'>
+
+
+      </div>
+
+    </script>
+
   
 
     <script type="text/template" id='interfaceLayout'>
@@ -58,7 +78,7 @@
 
         </div>
 
-        <div class='columns large-8'>
+        <div class='columns large-7'>
 
            
 
@@ -96,6 +116,18 @@
           </div>
 
          
+
+        </div>
+
+        <div class='columns small-1'>
+
+            <h5>Players Online</h5>
+
+            <div id='online'>
+
+
+
+            </div>
 
         </div>
 
@@ -232,6 +264,13 @@
 
     </script>
 
+
+    <script type='text/template' id='playersOnline'>
+
+            <p><%= player.id %> - <a class='challenge'><strong>Challenge</strong></a></p>
+
+    </script>
+
     <script src="app/twist/twistapp.js"></script>
 
     <script src="app/twist/twistapp.sets.js"></script>
@@ -241,6 +280,8 @@
     <script src="app/twist/twistapp.views.js"></script>
 
     <script src="app/twist/twistapp.game.js"></script>
+
+    <script src="app/twist/twistapp.sockets.js"></script>
 
     <script>
 

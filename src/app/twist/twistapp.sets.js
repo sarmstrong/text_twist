@@ -1,6 +1,6 @@
 /* global TwistApp,  Backbone, _ */
 
-TwistApp.module("Sets" , function(Sets , MyApp , Backbone , _){
+TwistApp.module("Sets" , function(Sets , MyApp , Backbone , Marionette , $ , _){
 
 		//Keeps track of the current set, stores the options, sets and user input data
 

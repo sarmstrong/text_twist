@@ -34,7 +34,7 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 
 				control_panel : "#controlPanel", 
 
-				online : "#online"
+				online : "#playersOnline"
 
 			} ,
 
@@ -62,9 +62,11 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 
 				this.messages.show(new MyApp.Views.MessageView({model: MyApp.current_set})); 
 
-				this.answers.show(new MyApp.Views.AnswersView({collection : MyApp.answers})); 
+				this.answers.show(new MyApp.Views.AnswersView({collection : MyApp.answers}));
 
-				this.online.show(new MyApp.Views.PlayersOnline());
+				//console.log(MyApp.online_users);
+
+				this.online.show(new MyApp.Views.PlayersOnline({collection: MyApp.online_users}));
 
 			}
 
@@ -85,7 +87,9 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 
 				interface_layout : "#interfaceLayout" , 
 
-				end_screen: "#endScreen"
+				end_screen: "#endScreen" , 
+
+				challenge_screen : "#challengeScreen"
 
 			} ,  
 
@@ -94,6 +98,8 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 				this.interface_layout.show(new MyApp.Layout.GameInterface());
 
 				this.end_screen.show(new MyApp.Views.EndScreen());
+
+				this.challenge_screen.show(new MyApp.Views.ChallengeScreen());
 
 			} 
 

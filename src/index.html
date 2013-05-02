@@ -41,6 +41,12 @@
 
       </div>
 
+      <div class='row' id='challengeScreen'>
+
+
+
+      </div>
+
       <div class='row' id='gameInterface'>
 
 
@@ -123,7 +129,7 @@
 
             <h5>Players Online</h5>
 
-            <div id='online'>
+            <div id='playersOnline'>
 
 
 
@@ -265,15 +271,34 @@
     </script>
 
 
-    <script type='text/template' id='playersOnline'>
+    <script type='text/template' id='playerOnlineItem'>
 
-            <p><%= player.id %> - <a class='challenge'><strong>Challenge</strong></a></p>
+            <p><%= player %> <a class='challenge'><strong>Challenge</strong></a></p>
+
+    </script>
+
+
+    <script type='text/template' id='challengeScreenTempl'>
+
+      <div class='panel'>
+      
+        <h1 class='solved'>Accept Challenge</h1>
+
+        <p>Someone is challenging you to a game. Do you accept?</p>
+
+        <a class='button accept'>Accept</a>
+
+        <a class='button decline'>Decline</a>
+
+      </div>
 
     </script>
 
     <script src="app/twist/twistapp.js"></script>
 
     <script src="app/twist/twistapp.sets.js"></script>
+
+    <script src="app/twist/twistapp.players.js"></script>
 
     <script src="app/twist/twistapp.layout.js"></script>
 

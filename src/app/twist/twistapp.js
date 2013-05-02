@@ -3,8 +3,3 @@
 var TwistApp = new Backbone.Marionette.Application();
 
 TwistApp.socketURL = 'http://localhost';
-
-
-
-
-

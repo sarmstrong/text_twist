@@ -152,31 +152,7 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 		}); 
 
-		// Renders answers in side bar
 
-		Views.AnswerItem = Backbone.Marionette.ItemView.extend({
-
-			//Initial Item Template, will not show answers obviously
-
-			template : "#answerTemplInit" , 
-
-			initialize : function() { 
-
-				this.model.on("change:solved" , this.solve , this); 
-
-			} , 
-
-			// Re-render view and show the answer
-
-			solve : function() { 
-
-				this.template = "#answerTemplSolved"; 
-
-				this.render();
-
-			}
-
-		});
 
 		// Renders the game timer and handles related events
 
@@ -287,6 +263,32 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 
 			} 
+
+		});
+
+		// Renders answers in side bar
+
+		Views.AnswerItem = Backbone.Marionette.ItemView.extend({
+
+			//Initial Item Template, will not show answers obviously
+
+			template : "#answerTemplInit" , 
+
+			initialize : function() { 
+
+				this.model.on("change:solved" , this.solve , this); 
+
+			} , 
+
+			// Re-render view and show the answer
+
+			solve : function() { 
+
+				this.template = "#answerTemplSolved"; 
+
+				this.render();
+
+			}
 
 		});
 
@@ -430,7 +432,19 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 		Views.PlayerItem = Backbone.Marionette.ItemView.extend({
 
-			template : "#playerItem"
+			template : "#playerOnlineItem" , 
+
+			events : {
+
+				"click .challenge" : "requestChallenge"
+
+			} , 
+
+			requestChallenge : function(e) { 
+
+				MyApp.vent.trigger("request_challenge" , {id : this.model.get("player")});
+
+			}
 
 
 		});
@@ -438,6 +452,56 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 		Views.PlayersOnline = Backbone.Marionette.CollectionView.extend({
 
 			itemView : Views.PlayerItem
+
+		})
+
+		Views.ChallengeScreen = Backbone.Marionette.ItemView.extend({
+
+			template : "#challengeScreenTempl" ,
+
+			player_one : null,
+
+
+			initialize : function() { 
+
+				this.hide();
+
+				MyApp.vent.on("challenge_requested" , this.show , this);
+
+			}, 
+
+			events : { 
+
+
+
+				"click .accept" : "challengeAccepted"
+
+
+			} ,
+
+			challengeAccepted : function() { 
+
+				MyApp.vent.trigger("challenge_accepted" , {player_one: this.player_one , player_two : MyApp.user_id});
+
+			} ,
+
+			show : function(data) { 
+
+
+
+				this.player_one = data.id;
+
+				$(this.el).show();
+
+			}, 
+
+
+
+			hide : function() {
+
+				$(this.el).hide();
+
+			}
 
 		})
 

@@ -2,6 +2,36 @@
 
 TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ ) {
 
+	MyApp.Server = Marionette.Controller.extend({
+
+		initialize : function() { 
+
+			MyApp.online_users = new MyApp.Players.Collection();
+
+			MyApp.vent.on("users_updated" , this.updateOnlineUsers , this);
+
+
+
+		}, 
+
+		updateOnlineUsers : function(users) {
+
+			var users_parsed = $.parseJSON(users); 
+
+			console.log(users_parsed);
+
+			MyApp.online_users.reset(users_parsed);
+
+			var user = MyApp.online_users.where({player : MyApp.user_id});
+
+			MyApp.online_users.remove(user);
+
+
+
+		}
+
+	})
+
 
 	// Controller handles game logic, updates views and models
 	
@@ -9,9 +39,9 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 		initialize : function() { 
 
-			MyApp.current_set = new MyApp.Sets.CurrentSet(); 
+			MyApp.current_set = new Sets.CurrentSet(); 
 
-			MyApp.answers = new MyApp.Sets.Answers();
+			MyApp.answers = new Sets.Answers();
 
 			// Starts new game on reset button press or when the user decides to play again
 
@@ -147,6 +177,8 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 	// Standard Marionette boilerplate code to initialize an app
 
 	Game.addInitializer(function() { 
+
+		var server = new MyApp.Server();
 
 		var controller = new MyApp.Controller();
 

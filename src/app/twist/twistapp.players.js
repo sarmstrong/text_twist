@@ -17,4 +17,4 @@ TwistApp.module("Players" , function(Players , MyApp , Backbone , Marionette , $
 	});
 
 
-}
+})

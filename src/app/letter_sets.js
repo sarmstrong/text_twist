@@ -146,3 +146,9 @@ var LETTER_CHOICES = [
 
 
 ];
+
+if (typeof exports !== 'undefined') {
+
+    exports.LETTER_CHOICES = LETTER_CHOICES;
+
+}

@@ -21,9 +21,9 @@ app.configure(function() {
 
 	app.set('port', process.env.PORT || 3000);
 
-	app.use(express.static('src'))
+	app.use(express.static('src'));
 
-})
+});
 
 
 app.get('/', function (req, res) {
@@ -51,50 +51,114 @@ var Game = Backbone.Model.extend({
 
 
 
-})
+});
 
 var Games = Backbone.Collection.extend({
 
 
 
-})
+});
 
-var choices = letter_sets.LETTER_CHOICES;
 
-// Randomize which set is chosen
-
-var rand_num = Math.floor(Math.random() * choices.length);
-
-// Set the current set model data
-
-var set = choices[rand_num];
-
-// Add the anwers to the answer collection
-
-var sorted = _.sortBy(choices[rand_num].set , function( obj ) {return obj.a.length;});
 
 
 var NewGame = function(data) { 
 
-	//console.log("New Game init for " + data.player_one + " and " + data.player_two);
+	var choices = letter_sets.LETTER_CHOICES;
 
+	// Randomize which set is chosen
 
+	var rand_num = Math.floor(Math.random() * choices.length);
+
+	// Set the current set model data
+
+	var set = choices[rand_num];
+
+	// Add the anwers to the answer collection
+
+	var sorted = _.sortBy(choices[rand_num].set , function( obj ) {return obj.a.length;});
+
+	var game_set = new sets.Sets.CurrentSet(set); 
+
+	var game_answers = new sets.Sets.Answers(sorted);
 
 	var game = new Game({
 
 		id : uuid.v1(),
 
-		player : data.player_one, 
+		player_one : data.player_one, 
 
-		player2 : data.player_two, 
+		player_two : data.player_two,
 
-		//options : options, 
+		player_one_score : "0", 
 
-		//set : set,
+		player_two_score : "0", 
 
-	})
+		set : game_set, 
 
-}
+		answers : game_answers
+
+	}); 
+
+	return game;
+
+
+};
+
+var updateGame = function(data) {
+
+	var game = games.where({id : data.id});
+
+	var answers = game[0].get("answers");
+
+	var check_answers = answers.where({a : data.answer}); 
+
+	if (check_answers[0] !== undefined && check_answers[0].get("solved") !== true) {
+
+		check_answers[0].set({solved : true});
+
+		if (game[0].get("player_one") === data.player) {
+
+			var player_score_num = "player_one_score";
+
+		} else {
+
+			var player_score_num = "player_two_score";
+
+		}
+
+		var score = game[0].get(player_score_num); 
+
+		var new_score = parseInt(score , 10) + 1; 
+
+		game[0].set(player_score_num , new_score );
+
+		var update_obj = {
+
+			player : data.player, 
+
+			score : new_score, 
+
+			answer : data.answer
+
+		};
+
+		return update_obj; 
+
+	}
+
+};
+
+var sendUpdate = function(data , update) {
+
+	var game = games.where({id : data.id});
+
+	io.sockets.sockets[game[0].get("player_one")].emit("game_updated" , JSON.stringify(update)); 
+
+	io.sockets.sockets[game[0].get("player_two")].emit("game_updated" , JSON.stringify(update));
+
+
+};
 
 
 
@@ -102,10 +166,6 @@ var clients = new Clients();
 
 var games = new Games();
 
-
-////
-
-var games = []; 
 
 server.listen(3000);
 
@@ -127,7 +187,7 @@ io.sockets.on('connection', function (socket) {
 
 		clients.remove(models[0]);
 
-	})
+	});
 
 	socket.on("request_challenge" , function(data){
 
@@ -140,9 +200,27 @@ io.sockets.on('connection', function (socket) {
 
 		var new_game = NewGame(data);
 
-	})
-	
+		games.add(new_game);
 
+		io.sockets.sockets[data.player_one].emit("start_challenge" , JSON.stringify(new_game)); 
+
+		io.sockets.sockets[data.player_two].emit("start_challenge" , JSON.stringify(new_game));
+
+	});
+
+	socket.on("game_update" , function(data){
+
+		//console.log(data);
+
+		var update = updateGame(data);
+
+		console.log("Update Obj");
+
+		console.log(update);
+
+		sendUpdate(data , update);
+
+	});
 
 });
 

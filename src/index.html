@@ -31,10 +31,6 @@
 
     <script type='text/template' id='appLayout'>
 
-      <header class='row' id='header'>
-
-      </header>
-
       <div class='row' id='endScreen'>
 
 
@@ -75,7 +71,10 @@
 
     <script type="text/template" id='interfaceLayout'>
 
-      
+        <div id='scoreBoard'>
+
+
+        </div>
 
       
         <div id='answers' class='columns large-4'>
@@ -289,6 +288,18 @@
         <a class='button accept'>Accept</a>
 
         <a class='button decline'>Decline</a>
+
+      </div>
+
+    </script>
+
+    <script type="text/template" id='playerScoreTempl'>
+
+      <div>
+
+          <h5><%= player %></h5>
+
+          <p>Score: <strong><%= score %></strong></p>
 
       </div>
 

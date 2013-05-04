@@ -20,6 +20,8 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 
 				MyApp.vent.on("playAgain" , this.show , this);
 
+				MyApp.vent.on("scoreboardInit" , this.showScoreBoard , this);
+
 			} ,
 
 			regions : {
@@ -34,7 +36,9 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 
 				control_panel : "#controlPanel", 
 
-				online : "#playersOnline"
+				online : "#playersOnline" , 
+
+				score_board : "#scoreBoard"
 
 			} ,
 
@@ -52,6 +56,14 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 
 			} , 
 
+			showScoreBoard : function() { 
+
+				console.log(MyApp.players);
+
+				
+
+			}, 
+
 			onRender : function() { 
 
 				this.current_set.show(new MyApp.Views.CurrentSetView({model : MyApp.current_set}));
@@ -67,6 +79,8 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 				//console.log(MyApp.online_users);
 
 				this.online.show(new MyApp.Views.PlayersOnline({collection: MyApp.online_users}));
+
+				this.score_board.show(new MyApp.Views.ScoreBoard({ collection: MyApp.players}));
 
 			}
 

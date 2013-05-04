@@ -479,7 +479,9 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 			} ,
 
-			challengeAccepted : function() { 
+			challengeAccepted : function() {
+
+				$(this.el).hide(); 
 
 				MyApp.vent.trigger("challenge_accepted" , {player_one: this.player_one , player_two : MyApp.user_id});
 
@@ -503,7 +505,27 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 			}
 
-		})
+		}) ; 
+
+		Views.PlayerScore = Backbone.Marionette.ItemView.extend({
+
+			template : "#playerScoreTempl" , 
+
+			initialize : function() { 
+
+				this.model.on("change:score" , this.render);
+
+			}
+
+		}); 
+
+
+		Views.ScoreBoard = Backbone.Marionette.CollectionView.extend({
+
+			itemView : Views.PlayerScore
+
+
+		}); 
 
 
 

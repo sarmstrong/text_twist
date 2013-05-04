@@ -8,9 +8,25 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 			MyApp.online_users = new MyApp.Players.Collection();
 
+			MyApp.players = new MyApp.Players.Collection();
+
 			MyApp.vent.on("users_updated" , this.updateOnlineUsers , this);
 
+			MyApp.vent.on("start_challenge" , this.initiateScoredBoard , this); 
 
+			MyApp.vent.on("game_updated" , this.updateScore , this);
+
+		}, 
+
+		updateScore : function(data) {
+
+			var data = $.parseJSON(data);
+
+			var player = MyApp.players.where({player_id : data.player}); 
+
+			player[0].set({score : data.score});
+
+			console.log(player[0]);
 
 		}, 
 
@@ -20,17 +36,51 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 			console.log(users_parsed);
 
+			console.log(users_parsed);
+
 			MyApp.online_users.reset(users_parsed);
 
 			var user = MyApp.online_users.where({player : MyApp.user_id});
 
 			MyApp.online_users.remove(user);
 
+		}, 
+
+		initiateScoredBoard : function(data) {
+
+			var data = $.parseJSON(data); 
+
+			MyApp.game_id = data.id;
+
+			var players = [{
+
+				player : "Player One", 
+
+				player_id : data.player_one, 
+
+				score : 0
+
+			}, {
+
+				player : "Player Two", 
+
+				player_id : data.player_two, 
+
+				score : 0
+
+
+			}]; 
+
+			console.log(players);
+
+			MyApp.players.reset(players);
+
+			MyApp.vent.trigger("scoreboardInit");
 
 
 		}
 
-	})
+	});
 
 
 	// Controller handles game logic, updates views and models
@@ -57,6 +107,10 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 			MyApp.vent.on("validateInput", this.validateInput , this);
 
+			MyApp.vent.on("start_challenge" , this.startMultiPlayerGame , this);
+
+			MyApp.vent.on("game_updated" , this.multiplayerUpdate , this);
+
 			//  Create a key board view, may not be dependent on layout
 
 			new MyApp.Views.KeyboardContainer({el : "body"});
@@ -72,6 +126,8 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 		// Starts a new game
 
 		start: function() {  
+
+			MyApp.mode = "single_player";
 
 			// Randomize which set is chosen
 
@@ -89,10 +145,29 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 			var sorted = _.sortBy(LETTER_CHOICES[rand_num].set , function( obj ) {return obj.a.length;});
 
+			
+
 			MyApp.answers.reset(sorted);
 
 			MyApp.vent.trigger("gameStart");
 			
+
+		} , 
+
+		startMultiPlayerGame : function(data) {
+
+			MyApp.mode = "multi_player";
+
+			var data = $.parseJSON(data); 
+
+			MyApp.current_set.set({user_input : ""});
+
+			MyApp.current_set.set(data.set);
+
+			MyApp.answers.reset(data.answers);
+
+			MyApp.vent.trigger("gameStart");	
+
 
 		} , 
 
@@ -110,6 +185,18 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 		} , 
 
+		multiplayerUpdate : function(data) { 
+
+			var data = $.parseJSON(data);
+
+			var answer = MyApp.answers.where({a : data.answer});
+
+			answer[0].set({solved : true}); 
+
+			this.updateCurrentScore();
+
+		}, 
+
 		// Checks to see if answer is correct
 
 		// If not it dispatches a global wrong answer event
@@ -120,17 +207,27 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 			var check_answers = MyApp.answers.where({a : MyApp.current_set.get("user_input")}); 
 
-			if (check_answers[0] !== undefined) { 
+			if (check_answers[0] !== undefined && check_answers[0].get("solved") !== true) { 
 
-				// Set the attribute of the answer model to solved
+			
+				if (MyApp.mode === 'single_player') {
 
-				// Will trigger a change event on corresponding view
+					// Set the attribute of the answer model to solved
 
-				check_answers[0].set({solved : true});
+					// Will trigger a change event on corresponding view
+
+					check_answers[0].set({solved : true});
+
+					this.updateCurrentScore();
+
+				} else if (MyApp.mode === 'multi_player') {
+
+
+					MyApp.vent.trigger("game_update" , {id : MyApp.game_id , player : MyApp.user_id , answer : MyApp.current_set.get("user_input")});
+
+				}	
 
 				MyApp.current_set.set({"user_input" : ""});
-
-				this.updateCurrentScore();
 
 
 			} else {
@@ -184,7 +281,7 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 		controller.start(); 
 
-	})
+	});
 
 	
 

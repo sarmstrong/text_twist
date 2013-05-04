@@ -22,22 +22,29 @@ var init_socket = function() {
 	socket.on("users_updated" , function(data) { 
 
 		TwistApp.vent.trigger("users_updated" , data);
-
 		
 
 	}); 
 
 	socket.on("challenge_requested" , function(data){
 
-		console.log("challenge on");
-
 		TwistApp.vent.trigger("challenge_requested" , data);
 
 	}); 
 
-	TwistApp.vent.on("request_challenge" , function(data){
+	socket.on("start_challenge" , function(data){
 
-		console.log(data);
+		TwistApp.vent.trigger("start_challenge" , data);
+
+	})
+
+	socket.on("game_updated" , function(data){
+
+		TwistApp.vent.trigger("game_updated" , data);
+
+	})
+
+	TwistApp.vent.on("request_challenge" , function(data){
 
 		socket.emit("request_challenge" , data);
 
@@ -46,11 +53,17 @@ var init_socket = function() {
 
 	TwistApp.vent.on("challenge_accepted" , function(data){
 
-		console.log(data);
-
 		socket.emit("challenge_accepted" , data)
 
-	})	
+	}); 
+
+	TwistApp.vent.on("game_update" , function(data) {
+
+		console.log(data);  
+
+		socket.emit("game_update" , data); 
+
+	})
 
 
 

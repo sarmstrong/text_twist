@@ -202,6 +202,8 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 		} , 
 
+		/// Registers multiplayer updates, updates the answers column and the current score
+
 		multiplayerUpdate : function(data) { 
 
 			var data = $.parseJSON(data);

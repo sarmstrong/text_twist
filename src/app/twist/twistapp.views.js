@@ -376,7 +376,7 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 		}); 
 
-
+		/// Views used to displa an online user, for sending challenge requests
 
 		Views.PlayerItem = Backbone.Marionette.ItemView.extend({
 
@@ -397,11 +397,15 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 		});
 
+		/// Perfunctory collection view
+
 		Views.PlayersOnline = Backbone.Marionette.CollectionView.extend({
 
 			itemView : Views.PlayerItem
 
 		})
+
+		/// Popup screen that shows challenge requests
 
 		Views.ChallengeScreen = Backbone.Marionette.ItemView.extend({
 
@@ -420,12 +424,12 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 			events : { 
 
-
-
 				"click .accept" : "challengeAccepted"
 
 
 			} ,
+
+			/// Triggers a challenge accepted event
 
 			challengeAccepted : function() {
 
@@ -437,14 +441,11 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 			show : function(data) { 
 
-
-
 				this.player_one = data.id;
 
 				$(this.el).show();
 
 			}, 
-
 
 
 			hide : function() {
@@ -455,6 +456,8 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 		}) ; 
 
+		/// View for displaying an individual score
+
 		Views.PlayerScore = Backbone.Marionette.ItemView.extend({
 
 			template : "#playerScoreTempl" , 
@@ -463,9 +466,22 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 				this.model.on("change:score" , this.render);
 
+			} , 
+
+			onRender : function() { 
+
+				if (this.model.get("player_id") === MyApp.user_id) {
+
+					this.$('.panel').addClass("current_user");
+
+				}
+
 			}
 
 		}); 
+
+
+		/// Collection view for player scores
 
 
 		Views.ScoreBoard = Backbone.Marionette.CollectionView.extend({
@@ -477,6 +493,8 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 				MyApp.vent.on("gameStart" , this.init , this);
 
 			},
+
+			// Hide if in single player mode
 
 			init : function () { 
 
@@ -583,6 +601,8 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 			} , 
 
+			/// Working on better continuation logic
+
 			closeScreen : function() { 
 
 				this.hide();
@@ -618,11 +638,14 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 			} , 
 
+			/// Update the end screen and show high/low scores 
+			/// And whether the current player won
+
 			getScores : function() { 
 
 				var player = MyApp.players.where({player_id : MyApp.user_id}); 
 
-				console.log(player);
+				/// Not my best code
 
 				if (player[0].get("player") === "Player One") {
 
@@ -637,6 +660,8 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 					var opponent_score = MyApp.players.at(0).get("score");
 
 				}
+
+				/// Logic for showing wether the user has won or lost
 
 				if ( my_score > opponent_score) {
 
@@ -653,6 +678,8 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 					this.$('.player_status').html("Tie Game!?!")
 
 				}
+
+				/// Shows player score totals
 
 				this.$(".player_one_score").html(MyApp.players.at(0).get("score"));
 

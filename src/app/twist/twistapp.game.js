@@ -2,11 +2,17 @@
 
 TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ ) {
 
+	// Object that handles logic for connectivity and user interaction
+
 	MyApp.Server = Marionette.Controller.extend({
 
 		initialize : function() { 
 
+			/// Stores a list of who is on line
+
 			MyApp.online_users = new MyApp.Players.Collection();
+
+			// Stores a list of who is currently playing
 
 			MyApp.players = new MyApp.Players.Collection();
 
@@ -17,6 +23,8 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 			MyApp.vent.on("game_updated" , this.updateScore , this);
 
 		}, 
+
+		///  Updates the score board
 
 		updateScore : function(data) {
 
@@ -30,13 +38,11 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 		}, 
 
+		/// Updares who is online
+
 		updateOnlineUsers : function(users) {
 
 			var users_parsed = $.parseJSON(users); 
-
-			console.log(users_parsed);
-
-			console.log(users_parsed);
 
 			MyApp.online_users.reset(users_parsed);
 
@@ -45,6 +51,8 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 			MyApp.online_users.remove(user);
 
 		}, 
+
+		/// Initiate a new score board collection
 
 		initiateScoredBoard : function(data) {
 
@@ -70,8 +78,6 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 
 			}]; 
-
-			console.log(players);
 
 			MyApp.players.reset(players);
 
@@ -154,6 +160,8 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 		} , 
 
+		/// Starts a new multiplayer game
+
 		startMultiPlayerGame : function(data) {
 
 			MyApp.mode = "multi_player";
@@ -167,7 +175,6 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 			MyApp.answers.reset(data.answers);
 
 			MyApp.vent.trigger("gameStart");	
-
 
 		} , 
 

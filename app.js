@@ -6,9 +6,13 @@ var express = require('express')
 
 	, io = require('socket.io').listen(server)
 
+	// Reuse underscore and backbone on the server
+
 	, _ = require("underscore")._
 
 	, Backbone = require("backbone")
+
+	// Used for creating unique game ids
 
 	, uuid = require('uuid')
 
@@ -21,18 +25,23 @@ app.configure(function() {
 
 	app.set('port', process.env.PORT || 3000);
 
+	/// Used to show assets like js, css , etc
+
 	app.use(express.static('src'));
 
 });
 
+/// Displays index file
+
 
 app.get('/', function (req, res) {
-
-  //console.log(req.sessionID);
 
   res.sendfile('src/index.html');
 
 });
+
+// Client model and client collection
+// Is used to keep a list of active sockets
 
 var Client = Backbone.Model.extend({
 
@@ -47,6 +56,8 @@ var Clients = Backbone.Collection.extend({
 
 });
 
+/// Used to track active games
+
 var Game = Backbone.Model.extend({
 
 
@@ -59,8 +70,13 @@ var Games = Backbone.Collection.extend({
 
 });
 
+// Stores clients and games
 
+var clients = new Clients();
 
+var games = new Games();
+
+/// Starts a new game
 
 var NewGame = function(data) { 
 
@@ -82,7 +98,11 @@ var NewGame = function(data) {
 
 	var game_answers = new sets.Sets.Answers(sorted);
 
+	/// Create a new game object and add it the the 'games' collection
+
 	var game = new Game({
+
+		// Creates a unique id for the game
 
 		id : uuid.v1(),
 
@@ -105,17 +125,27 @@ var NewGame = function(data) {
 
 };
 
+/// Updates the game status, similar to front end piece
+
 var updateGame = function(data) {
 
+	// Get the current game
+
 	var game = games.where({id : data.id});
+
+	// Get the answer set
 
 	var answers = game[0].get("answers");
 
 	var check_answers = answers.where({a : data.answer}); 
 
+	// If the answer if not undefined or already solved
+
 	if (check_answers[0] !== undefined && check_answers[0].get("solved") !== true) {
 
 		check_answers[0].set({solved : true});
+
+		// Which player score, could be refactored more cleanly
 
 		if (game[0].get("player_one") === data.player) {
 
@@ -127,11 +157,15 @@ var updateGame = function(data) {
 
 		}
 
+		// Adjust the current score to the new score
+
 		var score = game[0].get(player_score_num); 
 
 		var new_score = parseInt(score , 10) + 1; 
 
 		game[0].set(player_score_num , new_score );
+
+		// Create an update object to send back to the users game boards
 
 		var update_obj = {
 
@@ -149,9 +183,13 @@ var updateGame = function(data) {
 
 };
 
+// Sends game updates, takes data object from game update event and newly create update object
+
 var sendUpdate = function(data , update) {
 
 	var game = games.where({id : data.id});
+
+	/// Sends updates based on users sockets
 
 	io.sockets.sockets[game[0].get("player_one")].emit("game_updated" , JSON.stringify(update)); 
 
@@ -161,25 +199,25 @@ var sendUpdate = function(data , update) {
 };
 
 
-
-var clients = new Clients();
-
-var games = new Games();
-
-
-server.listen(3000);
-
-//console.log("hello world"); 
+/// Handles events for socket connections
 
 io.sockets.on('connection', function (socket) {
 
+	// Add the current sockets to client collection
+
 	clients.add({player : socket.id});
+
+	// Update the user with their session id
 
 	socket.emit('user', { id: socket.id});
 
 	socket.emit('users_updated' , JSON.stringify(clients));
 
+	// Broadcasts that a new player is online
+
 	socket.broadcast.emit('users_updated' , JSON.stringify(clients)); 
+
+	// Removes client from client collection
 
 	socket.on('disconnect' , function() {
 
@@ -189,18 +227,25 @@ io.sockets.on('connection', function (socket) {
 
 	});
 
+	/// Sends a challenge request
+
 	socket.on("request_challenge" , function(data){
 
 		io.sockets.sockets[data.id].emit("challenge_requested" , { id: socket.id });
 
 	}); 
 
-	
+	// Notify users that a challenge has been accepted
+
 	socket.on("challenge_accepted" , function(data){
+
+		// Create a new game model and add it to the games collections
 
 		var new_game = NewGame(data);
 
 		games.add(new_game);
+
+		// Send updates to both players
 
 		io.sockets.sockets[data.player_one].emit("start_challenge" , JSON.stringify(new_game)); 
 
@@ -208,20 +253,18 @@ io.sockets.on('connection', function (socket) {
 
 	});
 
+	// Send a game update that will update the game boards/score
+
 	socket.on("game_update" , function(data){
 
-		//console.log(data);
-
 		var update = updateGame(data);
-
-		console.log("Update Obj");
-
-		console.log(update);
 
 		sendUpdate(data , update);
 
 	});
 
 });
+
+server.listen(3000);
 
 

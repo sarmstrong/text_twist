@@ -26,6 +26,8 @@ body {
 }
 
 
+
+
 // MODULE InputPanel
 
 .rules span {
@@ -147,6 +149,14 @@ body {
 		display: block; 
 
 	}
+
+}
+
+/// MODULE User Panel
+
+.panel.current_user {
+	
+	background: rgb(246, 248, 223);
 
 }
 

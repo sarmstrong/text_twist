@@ -5092,7 +5092,7 @@ body {
   margin-bottom: 10px;
 }
 
-/* line 31, ../scss/app.scss */
+/* line 33, ../scss/app.scss */
 .rules span {
   border-bottom: 2px solid #333;
   width: 100%;
@@ -5104,7 +5104,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* line 55, ../scss/app.scss */
+/* line 57, ../scss/app.scss */
 .circle-text {
   font-size: 2em;
   background: #666;
@@ -5114,18 +5114,18 @@ body {
   width: 100%;
 }
 
-/* line 74, ../scss/app.scss */
+/* line 76, ../scss/app.scss */
 #messagePanel {
   margin-top: 10px;
 }
 
-/* line 80, ../scss/app.scss */
+/* line 82, ../scss/app.scss */
 .message {
   font-size: 1.5em;
   margin: 0;
 }
 
-/* line 90, ../scss/app.scss */
+/* line 92, ../scss/app.scss */
 .squares {
   border: 1px solid #ccc;
   font-size: 1.5em;
@@ -5133,12 +5133,12 @@ body {
   padding: 5px 0;
 }
 
-/* line 102, ../scss/app.scss */
+/* line 104, ../scss/app.scss */
 .cpanel.button {
   width: 100%;
 }
 
-/* line 108, ../scss/app.scss */
+/* line 110, ../scss/app.scss */
 .time {
   font-size: 1.2em;
   border-bottom: 1px solid #ccc;
@@ -5146,20 +5146,25 @@ body {
   text-align: right;
 }
 
-/* line 123, ../scss/app.scss */
+/* line 125, ../scss/app.scss */
 .solved .solved {
   display: block;
 }
-/* line 129, ../scss/app.scss */
+/* line 131, ../scss/app.scss */
 .solved .unsolved {
   display: none;
 }
 
-/* line 139, ../scss/app.scss */
+/* line 141, ../scss/app.scss */
 .unsolved .solved {
   display: none;
 }
-/* line 145, ../scss/app.scss */
+/* line 147, ../scss/app.scss */
 .unsolved .unsolved {
   display: block;
+}
+
+/* line 157, ../scss/app.scss */
+.panel.current_user {
+  background: #f6f8df;
 }

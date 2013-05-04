@@ -228,7 +228,17 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 						// Objects subscribing to this event will act accordingly
 
-						app.vent.trigger("timeUp");
+						if (MyApp.mode === "single_player") {
+
+							app.vent.trigger("timeUp");
+
+						} else if (MyApp.mode === "multi_player") {
+
+							app.vent.trigger("multiPlayerTimeUp");
+
+						}
+
+						
 
 					} else {
 
@@ -366,69 +376,7 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 		}); 
 
-		// Shows wether game is solved or time is up
 
-		Views.EndScreen = Backbone.Marionette.ItemView.extend({
-
-			template : "#endScreenTempl" , 
-
-			initialize : function() {
-
-				// Shows game solved screen when the game is solved
-
-				MyApp.vent.on("gameSolve" , this.showSolved , this);
-
-				MyApp.vent.on("playAgain" , this.hide , this);
-
-				// Show the times up screen if the time runs out
-
-				MyApp.vent.on("timeUp" , this.showUnsolved , this);
-
-				$(this.el).hide();
-
-			} ,
-
-
-			events : {
-
-				"click .play-again" : 'playAgain'
-
-			} , 
-
-			playAgain : function() { 
-
-				MyApp.vent.trigger("playAgain");
-
-			}, 
-
-			/// Shows view if game is solved
-
-			showSolved : function() {
-
-				$(this.el).removeClass('unsolved').addClass("solved");
-
-				$(this.el).show();
-
-			} , 
-
-			/// Shows when time is up
-
-			showUnsolved : function() { 
-
-				$(this.el).removeClass('solved').addClass("unsolved");
-
-				$(this.el).show();
-
-
-			} ,
-
-			hide : function() {
-
-				$(this.el).hide();
-
-			}
-
-		});
 
 		Views.PlayerItem = Backbone.Marionette.ItemView.extend({
 
@@ -522,10 +470,197 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 		Views.ScoreBoard = Backbone.Marionette.CollectionView.extend({
 
-			itemView : Views.PlayerScore
+			itemView : Views.PlayerScore  , 
+
+			initialize : function() { 
+
+				MyApp.vent.on("gameStart" , this.init , this);
+
+			},
+
+			init : function () { 
+
+				if (MyApp.mode === 'single_player') {
+
+					$(this.el).hide(); 
+
+				} else if (MyApp.mode === "multi_player") {
+
+					$(this.el).show(); 
+
+				}
+
+			}
 
 
 		}); 
+
+		// Shows wether game is solved or time is up
+
+		Views.EndScreen = Backbone.Marionette.ItemView.extend({
+
+			template : "#endScreenTempl" , 
+
+			initialize : function() {
+
+				// Shows game solved screen when the game is solved
+
+				MyApp.vent.on("gameSolve" , this.showSolved , this);
+
+				MyApp.vent.on("playAgain" , this.hide , this);
+
+				// Show the times up screen if the time runs out
+
+				MyApp.vent.on("timeUp" , this.showUnsolved , this);
+
+				$(this.el).hide();
+
+			} ,
+
+
+			events : {
+
+				"click .play-again" : 'playAgain'
+
+			} , 
+
+			playAgain : function() { 
+
+				MyApp.vent.trigger("playAgain");
+
+			}, 
+
+			/// Shows view if game is solved
+
+			showSolved : function() {
+
+				$(this.el).removeClass('unsolved').addClass("solved");
+
+				$(this.el).show();
+
+			} , 
+
+			/// Shows when time is up
+
+			showUnsolved : function() { 
+
+				$(this.el).removeClass('solved').addClass("unsolved");
+
+				$(this.el).show();
+
+
+			} ,
+
+			hide : function() {
+
+				$(this.el).hide();
+
+			}
+
+		});
+
+		// Same for end screen but for multiplayer
+
+		Views.MultiPlayerEndScreen = Backbone.Marionette.ItemView.extend({
+
+			template : "#multiPlayerEndScreenTempl" , 
+
+			initialize : function() { 
+
+				this.hide();
+
+				MyApp.vent.on("multiPlayerGameSolve" , this.showSolved , this);
+
+				// Show the times up screen if the time runs out
+
+				MyApp.vent.on("multiPlayerTimeUp" , this.showUnsolved , this);
+
+			}, 
+
+			events : {
+
+				'click .close' : "closeScreen"
+
+			} , 
+
+			closeScreen : function() { 
+
+				this.hide();
+
+				MyApp.vent.trigger("playAgain");
+
+			} , 
+
+
+			hide : function() {
+
+				$(this.el).hide();
+
+			}, 
+
+			showSolved : function() { 
+
+				this.getScores(); 
+
+				$(this.el).removeClass('unsolved').addClass("solved");
+
+				$(this.el).show();
+
+			} , 
+
+			showUnsolved : function() { 
+
+				this.getScores(); 
+
+				$(this.el).removeClass('solved').addClass("unsolved");
+
+				$(this.el).show();
+
+			} , 
+
+			getScores : function() { 
+
+				var player = MyApp.players.where({player_id : MyApp.user_id}); 
+
+				console.log(player);
+
+				if (player[0].get("player") === "Player One") {
+
+					var my_score = MyApp.players.at(0).get("score"); 
+
+					var opponent_score = MyApp.players.at(1).get("score"); 
+
+				} else {
+
+					var my_score = MyApp.players.at(1).get("score");
+
+					var opponent_score = MyApp.players.at(0).get("score");
+
+				}
+
+				if ( my_score > opponent_score) {
+
+					this.$('.player_status').html("You Won!!!")
+
+
+				} else if (my_score < opponent_score) {
+
+					this.$('.player_status').html("You Lose :(")
+
+
+				} else if (my_score === opponent_score) {
+
+					this.$('.player_status').html("Tie Game!?!")
+
+				}
+
+				this.$(".player_one_score").html(MyApp.players.at(0).get("score"));
+
+				this.$(".player_two_score").html(MyApp.players.at(1).get("score"));
+
+			}
+
+		})
 
 
 

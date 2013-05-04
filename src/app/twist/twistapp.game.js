@@ -179,7 +179,17 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 			if (solved.length === MyApp.answers.length) {
 
-				MyApp.vent.trigger("gameSolve"); 
+				if (MyApp.mode === 'single_player') {
+
+					MyApp.vent.trigger("gameSolve");
+
+				} else if (MyApp.mode === 'multi_player') {
+
+					console.log("solved");
+
+					MyApp.vent.trigger("multiPlayerGameSolve");
+
+				}
 
 			}
 

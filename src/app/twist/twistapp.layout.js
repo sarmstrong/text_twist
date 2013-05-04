@@ -16,7 +16,11 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 
 				MyApp.vent.on("gameSolve" , this.hide , this);
 
+				MyApp.vent.on("multiPlayerGameSolve" , this.hide , this);
+
 				MyApp.vent.on("timeUp" , this.hide , this);
+
+				MyApp.vent.on("multiPlayerTimeUp" , this.hide , this);
 
 				MyApp.vent.on("playAgain" , this.show , this);
 
@@ -103,7 +107,9 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 
 				end_screen: "#endScreen" , 
 
-				challenge_screen : "#challengeScreen"
+				challenge_screen : "#challengeScreen" , 
+
+				multiplayer_end_screen : "#multiPlayerEndScreen"
 
 			} ,  
 
@@ -114,6 +120,8 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 				this.end_screen.show(new MyApp.Views.EndScreen());
 
 				this.challenge_screen.show(new MyApp.Views.ChallengeScreen());
+
+				this.multiplayer_end_screen.show(new MyApp.Views.MultiPlayerEndScreen());
 
 			} 
 

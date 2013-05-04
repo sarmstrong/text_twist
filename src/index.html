@@ -37,6 +37,11 @@
 
       </div>
 
+      <div class='row' id='multiPlayerEndScreen'>
+
+
+      </div>
+
       <div class='row' id='challengeScreen'>
 
 
@@ -71,7 +76,7 @@
 
     <script type="text/template" id='interfaceLayout'>
 
-        <div id='scoreBoard'>
+        <div id='scoreBoard' class='row' >
 
 
         </div>
@@ -272,7 +277,7 @@
 
     <script type='text/template' id='playerOnlineItem'>
 
-            <p><%= player %> <a class='challenge'><strong>Challenge</strong></a></p>
+            <p><%= player %> <a class='challenge button tiny'><strong>Challenge</strong></a></p>
 
     </script>
 
@@ -295,11 +300,29 @@
 
     <script type="text/template" id='playerScoreTempl'>
 
-      <div>
+      <div class='columns small-2 panel'>
 
           <h5><%= player %></h5>
 
           <p>Score: <strong><%= score %></strong></p>
+
+      </div>
+
+    </script>
+
+    <script type='text/template' id='multiPlayerEndScreenTempl'>
+
+      <div>
+
+         <h1 class='solved'>Game Over!!! <span class='player_status'></span></h1>
+
+        <h1 class='unsolved'>Sorry, Times up! <span class='player_status'></span></h1>
+
+        <h3>Player One: <span class='player_one_score'></span>
+
+        <h3>Player Two: <span class='player_two_score'></span></h3>
+
+        <a class='button close'>Close<a>
 
       </div>
 

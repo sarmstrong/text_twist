@@ -424,7 +424,9 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 			events : { 
 
-				"click .accept" : "challengeAccepted"
+				"click .accept" : "challengeAccepted", 
+
+				"click .decline" : "hide"
 
 
 			} ,

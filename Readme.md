@@ -1,4 +1,4 @@
-#Text Twist - Multiplaer
+#Text Twist - Multiplayer
 
 An implementation of the classic Text Twist game using Backbone and Marionette. Uses socket.io to implement a multiplayer functionality.
 
@@ -12,7 +12,7 @@ Then run:
 
  Then navigate to http://localhost:3000.
 
- To simulate multiplayer, open windows in two different browsers and send a challenge request using the "challenge" button. On the adjacent browser window, click accept and play yourself on both browsers.
+ To simulate multiplayer, open windows in two different browsers and send a challenge request using the "challenge" button. On the adjacent browser window, click accept and play yourself on both browsers. 
 
 ###Todo
 

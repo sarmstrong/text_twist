@@ -4,7 +4,9 @@ var init_socket = function() {
 
 	// Set configs for socket.io
 
-	var socket = io.connect(TwistApp.socketURL);
+	var URL = window.location.protocol + "//" + window.location.host;
+
+	var socket = io.connect(URL);
 
 	// Register server online event
 
@@ -79,9 +81,7 @@ var init_socket = function() {
 
 	// Updates the users of score updates, answered questions
 
-	TwistApp.vent.on("game_update" , function(data) {
-
-		console.log(data);  
+	TwistApp.vent.on("game_update" , function(data) {  
 
 		socket.emit("game_update" , data); 
 

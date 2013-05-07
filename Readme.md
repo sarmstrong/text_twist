@@ -14,6 +14,10 @@ Then run:
 
  To simulate multiplayer, open windows in two different browsers and send a challenge request using the "challenge" button. On the adjacent browser window, click accept and play yourself on both browsers. 
 
+###Demo
+
+ See a live demo at: [http://text-twist-multi-player.nodejitsu.com](http://text-twist-multi-player.nodejitsu.com)
+
 ###Todo
 
 + Server offline functionality

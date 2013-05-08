@@ -18,7 +18,13 @@ Then run:
 
  See a live demo at: [http://text-twist-multi-player.nodejitsu.com](http://text-twist-multi-player.nodejitsu.com)
 
+###Disclaimer
+
+This app is intended for demo purposes only. Code is tested in webkit browsers and hasn't been optimized for lower browser versions.
+
 ###Todo
+
++ Manage sessions and socket id's
 
 + Server offline functionality
 
@@ -31,4 +37,6 @@ Then run:
 + Better game continuation
 
 + Show games in progress to other users
+
++ Socket errors in browsers that don't support websockets
 

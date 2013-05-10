@@ -84,8 +84,6 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 			handleBadInput : function(model) {
 
-				console.log(model);
-
 				this.showError(model.validationError);
 
 			}
@@ -314,12 +312,6 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 		Views.KeyboardContainer = Backbone.Marionette.ItemView.extend({
 
-			initialize : function() { 
-
-				console.log(this.el);
-
-			}, 
-
 			events : {
 
 				'keydown' : "handleKeyboard"
@@ -401,9 +393,27 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 		Views.PlayersOnline = Backbone.Marionette.CollectionView.extend({
 
-			itemView : Views.PlayerItem
+			itemView : Views.PlayerItem , 
 
-		})
+			initialize : function() { 
+
+				MyApp.vent.on("disconnect" , this.showOffline , this); 
+
+			} ,
+
+			showOffline : function() { 
+
+				this.$el.html("<p class='server-error'>Server Offline</p>"); 
+
+			} , 
+
+			onRender : function() { 
+
+
+				this.$(".server-error").remove();
+			}
+
+		});
 
 		/// Popup screen that shows challenge requests
 
@@ -645,21 +655,23 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 			getScores : function() { 
 
-				var player = MyApp.players.where({player_id : MyApp.user_id}); 
+				var my_score, opponent_score, player;
+
+				player = MyApp.players.where({player_id : MyApp.user_id}); 
 
 				/// Not my best code
 
 				if (player[0].get("player") === "Player One") {
 
-					var my_score = MyApp.players.at(0).get("score"); 
+					my_score = MyApp.players.at(0).get("score"); 
 
-					var opponent_score = MyApp.players.at(1).get("score"); 
+					opponent_score = MyApp.players.at(1).get("score"); 
 
 				} else {
 
-					var my_score = MyApp.players.at(1).get("score");
+					my_score = MyApp.players.at(1).get("score");
 
-					var opponent_score = MyApp.players.at(0).get("score");
+					opponent_score = MyApp.players.at(0).get("score");
 
 				}
 
@@ -667,17 +679,17 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 				if ( my_score > opponent_score) {
 
-					this.$('.player_status').html("You Won!!!")
+					this.$('.player_status').html("You Won!!!");
 
 
 				} else if (my_score < opponent_score) {
 
-					this.$('.player_status').html("You Lose :(")
+					this.$('.player_status').html("You Lose :(");
 
 
 				} else if (my_score === opponent_score) {
 
-					this.$('.player_status').html("Tie Game!?!")
+					this.$('.player_status').html("Tie Game!?!");
 
 				}
 
@@ -688,6 +700,55 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 				this.$(".player_two_score").html(MyApp.players.at(1).get("score"));
 
 			}
+
+		}); 
+
+		Views.ServerOffline = Backbone.Marionette.ItemView.extend({
+
+			template : "#serverOfflineTempl" , 
+
+			initialize : function() { 
+
+				this.hide();
+
+				MyApp.vent.on("disconnect" , this.handleOffline , this); 
+
+			}, 
+
+			handleOffline : function() { 
+
+				if (MyApp.mode === "multi_player" && MyApp.game_status === "inprogress") {
+
+					$(this.el).show();
+					
+				}
+
+			}, 
+
+
+			events : {
+
+				"click .continue" : "resetGame"
+
+			} , 
+
+
+
+			resetGame : function() { 
+
+				this.close();
+
+				MyApp.vent.trigger("reset");
+
+			} , 
+
+
+			hide : function() {
+
+				$(this.el).hide();
+
+			}
+
 
 		})
 

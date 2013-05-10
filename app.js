@@ -27,6 +27,8 @@ app.configure(function() {
 
 	/// Used to show assets like js, css , etc
 
+	app.use(app.router);
+
 	app.use(express.static('src'));
 
 });

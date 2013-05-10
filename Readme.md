@@ -26,17 +26,15 @@ This app is intended for demo purposes only. Code is tested in webkit browsers a
 
 + Manage sessions and socket id's
 
-+ Server offline functionality
++ Better cross challenger event messaging
 
-+ Disconnect events for current game
-
-+ Notification that a challenge has been rejected
++ Notification that a challenge has been rejfected
 
 + Garbage cleanup for game store
 
 + Better game continuation
 
-+ Show games in progress to other users
-
 + Socket errors in browsers that don't support websockets
+
++ Move game logic to shared object between server and client
 

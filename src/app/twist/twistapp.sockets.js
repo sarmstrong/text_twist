@@ -16,6 +16,14 @@ var init_socket = function() {
 
 	}); 
 
+	/// Broadcast a server error to app
+
+	socket.on("disconnect" , function() { 
+
+		TwistApp.vent.trigger("disconnect");
+
+	})
+
 	// Register current users session id
 
 	socket.on("user" , function(data) { 

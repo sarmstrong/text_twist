@@ -117,6 +117,8 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 			MyApp.vent.on("game_updated" , this.multiplayerUpdate , this);
 
+			MyApp.vent.on("gameStart gameStart gameSolve multiPlayerGameSolve" , this.setGameStatus , this);
+
 			//  Create a key board view, may not be dependent on layout
 
 			new MyApp.Views.KeyboardContainer({el : "body"});
@@ -128,6 +130,12 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 			this.app_layout.render();
 
 		} , 
+
+		setGameStatus : function(game_status) { 
+
+			MyApp.game_status = game_status;
+
+		}, 
 
 		// Starts a new game
 
@@ -151,11 +159,9 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 			var sorted = _.sortBy(LETTER_CHOICES[rand_num].set , function( obj ) {return obj.a.length;});
 
-			
-
 			MyApp.answers.reset(sorted);
 
-			MyApp.vent.trigger("gameStart");
+			MyApp.vent.trigger("gameStart" , 'inprogress');
 			
 
 		} , 
@@ -174,7 +180,7 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 			MyApp.answers.reset(data.answers);
 
-			MyApp.vent.trigger("gameStart");	
+			MyApp.vent.trigger("gameStart" , 'inprogress');	
 
 		} , 
 
@@ -188,13 +194,13 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 				if (MyApp.mode === 'single_player') {
 
-					MyApp.vent.trigger("gameSolve");
+					MyApp.vent.trigger("gameSolve" , 'inactive');
 
 				} else if (MyApp.mode === 'multi_player') {
 
 					console.log("solved");
 
-					MyApp.vent.trigger("multiPlayerGameSolve");
+					MyApp.vent.trigger("multiPlayerGameSolve" , 'inactive');
 
 				}
 

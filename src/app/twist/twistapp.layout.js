@@ -14,15 +14,9 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 
 			initialize : function() {
 
-				MyApp.vent.on("gameSolve" , this.hide , this);
+				MyApp.vent.on("timeUp multiPlayerTimeUp multiPlayerGameSolve gameSolve disconnect" , this.hide , this);
 
-				MyApp.vent.on("multiPlayerGameSolve" , this.hide , this);
-
-				MyApp.vent.on("timeUp" , this.hide , this);
-
-				MyApp.vent.on("multiPlayerTimeUp" , this.hide , this);
-
-				MyApp.vent.on("playAgain" , this.show , this);
+				MyApp.vent.on("playAgain gameStart" , this.show , this);
 
 				MyApp.vent.on("scoreboardInit" , this.showScoreBoard , this);
 
@@ -60,14 +54,6 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 
 			} , 
 
-			showScoreBoard : function() { 
-
-				console.log(MyApp.players);
-
-				
-
-			}, 
-
 			onRender : function() { 
 
 				this.current_set.show(new MyApp.Views.CurrentSetView({model : MyApp.current_set}));
@@ -79,8 +65,6 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 				this.messages.show(new MyApp.Views.MessageView({model: MyApp.current_set})); 
 
 				this.answers.show(new MyApp.Views.AnswersView({collection : MyApp.answers}));
-
-				//console.log(MyApp.online_users);
 
 				this.online.show(new MyApp.Views.PlayersOnline({collection: MyApp.online_users}));
 
@@ -109,7 +93,9 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 
 				challenge_screen : "#challengeScreen" , 
 
-				multiplayer_end_screen : "#multiPlayerEndScreen"
+				multiplayer_end_screen : "#multiPlayerEndScreen", 
+
+				server_offline : "#serverOffline"
 
 			} ,  
 
@@ -123,7 +109,11 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 
 				this.multiplayer_end_screen.show(new MyApp.Views.MultiPlayerEndScreen());
 
+				this.server_offline.show(new MyApp.Views.ServerOffline());
+
 			} 
+
+
 
 
 		});

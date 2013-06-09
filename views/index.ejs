@@ -1,0 +1,376 @@
+<!DOCTYPE HTML>
+
+<html lang="en-US">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Text Twist</title>
+    <link rel="stylesheet" href="stylesheets/app.css">
+  </head>
+
+  <body>
+
+
+
+    <div class='wrapper' id='app'>
+
+    </div>
+
+
+    <!-- scripts-->
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.10/backbone-min.js"></script>
+
+    <script src="http://marionettejs.com/downloads/backbone.marionette.min.js"></script>
+
+    <script src='app/letter_sets.js'></script>
+
+     <script src='/socket.io/socket.io.js'></script>
+
+    <script type='text/template' id='appLayout'>
+
+      <div class='row' id='endScreen'>
+
+
+
+      </div>
+
+      <div class='row' id='serverOffline'>
+
+      </div>
+
+      <div class='row' id='multiPlayerEndScreen'>
+
+
+      </div>
+
+      <div class='row' id='challengeScreen'>
+
+
+
+      </div>
+
+      <div class='row' id='gameInterface'>
+
+
+
+      </div>
+
+
+
+    </script>
+
+    <script type='text/template' id='headerLayout'>
+
+      <div class='user'>
+
+
+      </div>
+
+      <div class='scoreBoard'>
+
+
+      </div>
+
+    </script>
+
+  
+
+    <script type="text/template" id='interfaceLayout'>
+
+        <div id='scoreBoard' class='row' >
+
+
+        </div>
+
+      
+        <div id='answers' class='columns large-4'>
+
+
+
+        </div>
+
+        <div class='columns large-7'>
+
+           
+
+            <div class='row' >
+
+              <div id='controlPanel'>
+
+
+              </div>
+
+              
+
+              
+
+            </div>
+
+
+
+          <div class='row'> 
+
+            <div id='inputPanel' ></div>
+
+          </div>
+
+          <div class='row'> 
+
+            <div id='currentSetPanel' ></div>
+
+          </div>
+
+          <div class='row'>
+
+            <div id='messagePanel' ></div>
+
+          </div>
+
+         
+
+        </div>
+
+        <div class='columns small-1'>
+
+            <h5>Players Online</h5>
+
+            <div id='playersOnline'>
+
+
+
+            </div>
+
+        </div>
+
+      
+
+    </script>
+
+    <script type='text/template' id='inputPanelTempl'>
+
+
+            <% for (var i = 0 ; i < 6 ; i++) { 
+
+              if (user_input.split("")[i] !== undefined) { %>
+
+                  <div class='rules columns small-2'><span><%= user_input.split("")[i] %></span></div>
+
+              <% } else { %>
+
+                  <div class='rules columns small-2'><span>&nbsp;</span></div>
+
+              <% } %>
+
+            <% } %>
+
+
+
+    </script>
+
+    <script type="text/template" id='currentSetPanelTempl'>
+
+        <% var opts = _.shuffle(options) ; 
+
+           _.map(opts , function(l) {  %>
+
+          <div class=' columns small-2'><div class="circle-text"><%= l %></div></div>
+
+        <% }) %>
+
+
+    </script>
+
+    <script type='text/template' id='messageTempl'>
+
+      <p class='message'></p>
+
+    </script>
+
+    <script type='text/template' id='answerTemplSolved' >
+
+      <div class='row'>
+      
+      <% for (var i = 0 ; i < 6 ; i++) { 
+
+              if (a.split("")[i] !== undefined) { %>
+
+                  <div class='squares columns small-2'><%= a.split("")[i] %></div>
+
+              <% } else { %>
+
+                  <div class='columns small-2'>&nbsp;</div>
+
+              <% } %>
+
+      <% } %>
+
+      </div>
+
+
+    </script>
+
+
+
+    <script type='text/template' id='answerTemplInit' >
+
+      <div class='row'>
+      
+      <% for (var i = 0 ; i < 6 ; i++) { 
+
+              if (a.split("")[i] !== undefined) { %>
+
+                  <div class='squares columns small-2'>&nbsp;</div>
+
+              <% } else { %>
+
+                  <div class='columns small-2'>&nbsp;</div>
+
+              <% } %>
+
+      <% } %>
+
+      </div>
+
+    </script>
+
+    <script type='text/template' id='controlPanelTempl'>
+
+          <div class='columns small-2' id='resetButton'>
+
+            <a class='reset cpanel button small'>Reset</a>
+
+          </div>
+
+          <div class='columns small-2' id='pauseButton'>
+
+            <a class='twist cpanel button small'>Twist</a>
+
+          </div>
+
+          <div class='columns small-2' id='timer'>
+
+
+          </div>
+
+
+    </script>
+
+    <script type='text/template' id='timerTempl'>
+
+      <p class='time'></p>
+
+    </script>
+
+    <script type='text/template' id='endScreenTempl'>
+
+      <div class='panel'>
+      
+        <h1 class='solved'>Great job, you won!</h1>
+
+        <h1 class='unsolved'>Sorry, Times up!</h1>
+
+        <a class='button play-again'>Play Again?</a>
+
+      </div>
+
+    </script>
+
+
+    <script type='text/template' id='playerOnlineItem'>
+
+            <p><%= player %> <a class='challenge button tiny'><strong>Challenge</strong></a></p>
+
+    </script>
+
+
+    <script type='text/template' id='challengeScreenTempl'>
+
+      <div class='panel'>
+      
+        <h1 class='solved'>Accept Challenge</h1>
+
+        <p>Someone is challenging you to a game. Do you accept?</p>
+
+        <a class='button accept'>Accept</a>
+
+        <a class='button decline'>Decline</a>
+
+      </div>
+
+    </script>
+
+    <script type="text/template" id='playerScoreTempl'>
+
+      <div class='columns small-2 panel'>
+
+          <h5><%= player %></h5>
+
+          <p>Score: <strong><%= score %></strong></p>
+
+      </div>
+
+    </script>
+
+    <script type='text/template' id='multiPlayerEndScreenTempl'>
+
+      <div>
+
+         <h1 class='solved'>Game Over!!! <span class='player_status'></span></h1>
+
+        <h1 class='unsolved'>Sorry, Times up! <span class='player_status'></span></h1>
+
+        <h3>Player One: <span class='player_one_score'></span>
+
+        <h3>Player Two: <span class='player_two_score'></span></h3>
+
+        <a class='button close'>Close<a>
+
+      </div>
+
+    </script>
+
+    <script type='text/template' id='serverOfflineTempl'>
+
+      <div class='panel'>
+
+
+        <h1>Server Offline</h1>
+
+        <p>The server has hung up and unfortunately you can&quot;t keep playing your opponent. You can still play offline by clicking the button below</p>
+
+        <a class=' button continue'>Play as Single Player</a>
+
+      </div>
+
+    </script>
+
+    <script src="app/twist/twistapp.js"></script>
+
+    <script src="app/twist/twistapp.sets.js"></script>
+
+    <script src="app/twist/twistapp.players.js"></script>
+
+    <script src="app/twist/twistapp.layout.js"></script>
+
+    <script src="app/twist/twistapp.views.js"></script>
+
+    <script src="app/twist/twistapp.game.js"></script>
+
+    <script src="app/twist/twistapp.sockets.js"></script>
+
+    <script>
+
+      (function() { 
+
+        TwistApp.start();
+
+      })()
+
+    </script>
+
+  </body>
+</html>

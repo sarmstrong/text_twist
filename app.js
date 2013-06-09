@@ -1,24 +1,40 @@
-var express = require('express')
+var express = require('express');
 
-	, app = express()
+var app = express();
 
-	, server = require('http').createServer(app) 
+var server = require('http').createServer(app); 
 
-	, io = require('socket.io').listen(server)
+var routes = require('./routes'); 
 
-	// Reuse underscore and backbone on the server
+var http = require('http'); 
 
-	, _ = require("underscore")._
+var path = require('path');
 
-	, Backbone = require("backbone")
+/// Overwrite default ejs template sites to play "nice" with underscore templates
 
-	// Used for creating unique game ids
+var ejs = require('ejs');
 
-	, uuid = require('uuid')
+ejs.open = '{{';
 
-	, sets = require("./src/app/twist/twistapp.sets.js")
+ejs.close = '}}';
 
-	, letter_sets = require("./src/app/letter_sets.js"); 
+// The magic behind websockets!!!!
+
+var io = require('socket.io').listen(server); 
+
+// Reuse underscore and backbone on the server
+
+var  _ = require("underscore")._ ; 
+
+var Backbone = require("backbone"); 
+
+// Used for creating unique game ids
+
+var uuid = require('uuid'); 
+
+var sets = require("./public/app/twist/twistapp.sets.js"); 
+
+var letter_sets = require("./public/app/letter_sets.js"); 
 
 
 app.configure(function() {
@@ -29,18 +45,29 @@ app.configure(function() {
 
 	app.use(app.router);
 
-	app.use(express.static('src'));
+	app.set('views', __dirname + '/views');
+
+    app.set('view engine', 'ejs');
+
+	app.use(express.static(path.join(__dirname, 'public')));
 
 });
 
 /// Displays index file
 
 
-app.get('/', function (req, res) {
+app.get('/', routes.index);
 
-  res.sendfile('src/index.html');
+app.get('/login' , function(req , res){
 
-});
+
+})
+
+app.get('/logout' , function(req , res){
+
+
+
+})
 
 // Client model and client collection
 // Is used to keep a list of active sockets

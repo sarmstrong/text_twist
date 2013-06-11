@@ -14,6 +14,8 @@
 
     <div class='wrapper' id='app'>
 
+
+
     </div>
 
 
@@ -53,9 +55,36 @@
 
       </div>
 
+      <header class='row'>
+
+        <div class='logo columns large-4'>
+
+          <div class='row'>
+
+          <h1>TextTwist</h1>
+
+          </div>
+          
+          
+
+        </div>
+
+
+        <div class='score-container columns large-6'></div>
+
+
+
+        <div class='userprofile columns large-2'>
+
+          <div><p class='userprofile-text'>Welcome {{= username }}<br /><a class='' href='/logout'>(Logout)</a></p></div>
+
+        </div>
+
+      </header>
+
       <div class='row' id='gameInterface'>
 
-
+        <div><
 
       </div>
 
@@ -93,7 +122,7 @@
 
         </div>
 
-        <div class='columns large-7'>
+        <div class='columns large-6'>
 
            
 
@@ -134,7 +163,7 @@
 
         </div>
 
-        <div class='columns small-1'>
+        <div class='columns large-2'>
 
             <h5>Players Online</h5>
 
@@ -239,19 +268,19 @@
 
     <script type='text/template' id='controlPanelTempl'>
 
-          <div class='columns small-2' id='resetButton'>
+          <div class='columns small-3' id='resetButton'>
 
             <a class='reset cpanel button small'>Reset</a>
 
           </div>
 
-          <div class='columns small-2' id='pauseButton'>
+          <div class='columns small-3' id='pauseButton'>
 
             <a class='twist cpanel button small'>Twist</a>
 
           </div>
 
-          <div class='columns small-2' id='timer'>
+          <div class='columns small-3' id='timer'>
 
 
           </div>

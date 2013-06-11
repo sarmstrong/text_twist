@@ -5087,7 +5087,24 @@ table tfoot tr td {
   margin-bottom: 10px;
 }
 
-/* line 27, ../scss/app.scss */
+/* line 22, ../scss/app.scss */
+.panel {
+  -webkit-box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* line 30, ../scss/app.scss */
+.logo h1 {
+  margin: 0;
+}
+
+/* line 38, ../scss/app.scss */
+.userprofile-text {
+  font-size: .85em;
+}
+
+/* line 49, ../scss/app.scss */
 .rules span {
   border-bottom: 2px solid #2a353c;
   width: 100%;
@@ -5099,28 +5116,28 @@ table tfoot tr td {
   margin-bottom: 20px;
 }
 
-/* line 51, ../scss/app.scss */
+/* line 73, ../scss/app.scss */
 .circle-text {
-  font-size: 2em;
+  font-size: 1.8em;
   background: #2a353c;
   color: white;
-  padding: 22px 20px;
+  padding: 10px 20px;
   text-align: center;
   width: 100%;
 }
 
-/* line 70, ../scss/app.scss */
+/* line 92, ../scss/app.scss */
 #messagePanel {
   margin-top: 10px;
 }
 
-/* line 76, ../scss/app.scss */
+/* line 98, ../scss/app.scss */
 .message {
   font-size: 1.5em;
   margin: 0;
 }
 
-/* line 86, ../scss/app.scss */
+/* line 108, ../scss/app.scss */
 .squares {
   border: 1px solid #bbb;
   font-size: 1.5em;
@@ -5128,12 +5145,12 @@ table tfoot tr td {
   padding: 5px 0;
 }
 
-/* line 98, ../scss/app.scss */
+/* line 120, ../scss/app.scss */
 .cpanel.button {
   width: 100%;
 }
 
-/* line 104, ../scss/app.scss */
+/* line 126, ../scss/app.scss */
 .time {
   font-size: 1.2em;
   border-bottom: 1px solid #607988;
@@ -5141,25 +5158,25 @@ table tfoot tr td {
   text-align: right;
 }
 
-/* line 119, ../scss/app.scss */
+/* line 141, ../scss/app.scss */
 .solved .solved {
   display: block;
 }
-/* line 125, ../scss/app.scss */
+/* line 147, ../scss/app.scss */
 .solved .unsolved {
   display: none;
 }
 
-/* line 135, ../scss/app.scss */
+/* line 157, ../scss/app.scss */
 .unsolved .solved {
   display: none;
 }
-/* line 141, ../scss/app.scss */
+/* line 163, ../scss/app.scss */
 .unsolved .unsolved {
   display: block;
 }
 
-/* line 151, ../scss/app.scss */
+/* line 173, ../scss/app.scss */
 .panel.current_user {
   background: #f6f8df;
 }

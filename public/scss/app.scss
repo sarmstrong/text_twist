@@ -19,6 +19,28 @@
 
 }
 
+.panel {
+	
+	@include box-shadow(2px 2px 8px rgba(0,0,0,0.3));
+
+}
+
+// Logo
+
+.logo h1 {
+	
+	margin: 0; 
+
+}
+
+// MODULE User Profile Panel
+
+.userprofile-text {
+	
+	font-size : .85em;
+
+}
+
 
 
 
@@ -51,13 +73,13 @@
 .circle-text {
 	
 
-	font-size: 2em; 
+	font-size: 1.8em; 
 
 	background: $primary-color; 
 
 	color: white;
 
-	padding: 22px 20px; 
+	padding: 10px 20px; 
 
 	text-align: center;
 

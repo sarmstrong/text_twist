@@ -36,18 +36,48 @@ var sets = require("./public/app/twist/twistapp.sets.js");
 
 var letter_sets = require("./public/app/letter_sets.js"); 
 
+var cookieParser = express.cookieParser('IDf~BE#j2@MAs?DOl#2yAoU4_h+De');
+
+// Require modules for session storage
+
+var RedisStore = require('connect-redis')(express);
+
+var redis = require("redis");
+
+var client = redis.createClient();
+
+var sessionStore = new RedisStore({client: client}); 
+
+// Configure App
 
 app.configure(function() {
 
 	app.set('port', process.env.PORT || 3000);
 
+	app.use(express.bodyParser({ keepExtensions: true }));
+
 	/// Used to show assets like js, css , etc
+
+	app.use(cookieParser);
+
+  	app.use(express.session({ 
+
+      store: new RedisStore({client: client}), 
+
+      maxAge  : new Date(Date.now() + 3600000), //1 Hour
+
+      expires : new Date(Date.now() + 3600000), //1 Hour
+
+  	}));
 
 	app.use(app.router);
 
 	app.set('views', __dirname + '/views');
 
     app.set('view engine', 'ejs');
+
+
+  
 
 	app.use(express.static(path.join(__dirname, 'public')));
 
@@ -58,25 +88,35 @@ app.configure(function() {
 
 app.get('/', routes.index);
 
-app.get('/login' , function(req , res){
+app.post('/login' , function(req , res){
+
+
+
+	if (req.body.username !== undefined ) {
+
+		req.session.username = req.body.username; 
+
+	}; 
+
+	res.redirect("/");
 
 
 })
 
 app.get('/logout' , function(req , res){
 
+	req.session.destroy(function()  {
 
+		res.redirect("/");
+
+	}); 
 
 })
 
 // Client model and client collection
 // Is used to keep a list of active sockets
 
-var Client = Backbone.Model.extend({
-
-
-
-});
+var Client = Backbone.Model.extend({});
 
 var Clients = Backbone.Collection.extend({
 
@@ -87,11 +127,7 @@ var Clients = Backbone.Collection.extend({
 
 /// Used to track active games
 
-var Game = Backbone.Model.extend({
-
-
-
-});
+var Game = Backbone.Model.extend({});
 
 var Games = Backbone.Collection.extend({
 

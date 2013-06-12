@@ -263,14 +263,28 @@ var sendUpdate = function(data , update) {
 
 };
 
+/// Brings together session data with socket sessions
+
+var SessionSockets = require('session.socket.io'); 
+
+var sessionSockets = new SessionSockets(io, sessionStore, cookieParser);
+
 
 /// Handles events for socket connections
 
-io.sockets.on('connection', function (socket) {
+sessionSockets.on('connection', function (err , socket , session) {
 
 	// Add the current sockets to client collection
 
-	clients.add({player : socket.id});
+	if (err !== null) {
+
+		console.log(err);
+
+		console.log(socket);
+
+	}
+
+	clients.add({player : socket.id , username: session.username});
 
 	// Update the user with their session id
 
@@ -289,6 +303,10 @@ io.sockets.on('connection', function (socket) {
 		var models = clients.where({player : socket.id});
 
 		clients.remove(models[0]);
+
+		console.log("disconnect");
+
+		socket.broadcast.emit('users_updated' , JSON.stringify(clients)); 
 
 	});
 

@@ -15,21 +15,21 @@
 // $em-base: 16px;
 
 // We use these to control various global styles
-$body-bg: #E2E2E2;
-$body-font-color: #555;
-// $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$body-bg: #E5E5E5;
+$body-font-color: #3B76A6;
+$body-font-family:  "proxima-nova",sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;
 
 // We use this to control font-smoothing
-// $font-smoothing: antialiased;
+$font-smoothing: antialiased;
 
 // We use these to control text direction settings
 // $text-direction: ltr;
 
 // We use these as default colors throughout
-$primary-color: #2A353C;
-$secondary-color: #607988;
+$primary-color: #3B76A6;
+$secondary-color: #C76C13;
 // $alert-color: #c60f13;
 // $success-color: #5da423;
 
@@ -70,10 +70,10 @@ $global-rounded: 5px;
 //
 
 // We use these to control header font styles
-// $header-font-family "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$header-font-family: "proxima-nova",sans-serif;
 // $header-font-weight: bold;
 // $header-font-style: normal;
-$header-font-color: #555;
+$header-font-color: #3B76A6;
 // $header-line-height: 1.4;
 // $header-top-margin .2em;
 // $header-bottom-margin .5em;
@@ -247,7 +247,7 @@ $header-font-color: #555;
 // $button-border-color: darken($primary-color, $button-function-factor);
 
 // We use this to set the default radius used throughout the core.
-// $button-radius: $global-radius;
+$button-radius: $global-radius;
 
 // We use this to set default opacity for disabled buttons.
 // $button-disabled-opacity: 0.6;

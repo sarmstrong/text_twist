@@ -233,7 +233,6 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 			var check_answers = MyApp.answers.where({a : MyApp.current_set.get("user_input")}); 
 
 			if (check_answers[0] !== undefined && check_answers[0].get("solved") !== true) { 
-
 			
 				if (MyApp.mode === 'single_player') {
 
@@ -242,6 +241,8 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 					// Will trigger a change event on corresponding view
 
 					check_answers[0].set({solved : true});
+
+					MyApp.vent.trigger("correct_answer" , {answer: MyApp.current_set.get("user_input")})
 
 					this.updateCurrentScore();
 

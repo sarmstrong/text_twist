@@ -5077,12 +5077,12 @@ table tfoot tr td {
   max-width: 800px;
 }
 
-/* line 9, ../scss/app.scss */
+/* line 11, ../scss/app.scss */
 html {
   height: 100%;
 }
 
-/* line 14, ../scss/app.scss */
+/* line 16, ../scss/app.scss */
 body {
   min-height: 100%;
   background-image: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 1700, color-stop(0%, #ffffff), color-stop(100%, #9ec0dc));
@@ -5092,7 +5092,7 @@ body {
   background-image: radial-gradient(#ffffff, #9ec0dc 1700px);
 }
 
-/* line 23, ../scss/app.scss */
+/* line 25, ../scss/app.scss */
 header {
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #3b76a6), color-stop(100%, #6fa9d8));
   background-image: -webkit-linear-gradient(top, #3b76a6, #6fa9d8);
@@ -5105,17 +5105,17 @@ header {
   color: white;
 }
 
-/* line 34, ../scss/app.scss */
+/* line 36, ../scss/app.scss */
 .wrapper {
   margin-top: 20px;
 }
 
-/* line 41, ../scss/app.scss */
+/* line 43, ../scss/app.scss */
 .row .row {
   margin-bottom: 10px;
 }
 
-/* line 47, ../scss/app.scss */
+/* line 49, ../scss/app.scss */
 .panel {
   -webkit-box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
@@ -5127,7 +5127,7 @@ header {
   background-image: linear-gradient(top, #eff6fb, #ffffff);
 }
 
-/* line 57, ../scss/app.scss */
+/* line 59, ../scss/app.scss */
 .logo h1 {
   margin: 0;
   color: white;
@@ -5135,7 +5135,7 @@ header {
   font-weight: 400;
 }
 
-/* line 69, ../scss/app.scss */
+/* line 71, ../scss/app.scss */
 .logo h4 {
   color: #ddd;
   margin-top: -10px;
@@ -5146,24 +5146,24 @@ header {
   font-weight: 200;
 }
 
-/* line 90, ../scss/app.scss */
+/* line 92, ../scss/app.scss */
 .userprofile {
   margin-top: 20px;
 }
 
-/* line 96, ../scss/app.scss */
+/* line 98, ../scss/app.scss */
 .userprofile-text {
   font-size: .85em;
   font-weight: 400;
 }
 
-/* line 104, ../scss/app.scss */
+/* line 106, ../scss/app.scss */
 .userprofile-text a {
   color: #eee;
   font-weight: 400;
 }
 
-/* line 117, ../scss/app.scss */
+/* line 119, ../scss/app.scss */
 .rules span {
   border-bottom: 2px solid #3b76a6;
   width: 100%;
@@ -5175,7 +5175,7 @@ header {
   margin-bottom: 20px;
 }
 
-/* line 141, ../scss/app.scss */
+/* line 143, ../scss/app.scss */
 .circle-text {
   font-size: 1.8em;
   font-weight: 800;
@@ -5191,18 +5191,18 @@ header {
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* line 168, ../scss/app.scss */
+/* line 170, ../scss/app.scss */
 #messagePanel {
   margin-top: 10px;
 }
 
-/* line 174, ../scss/app.scss */
+/* line 176, ../scss/app.scss */
 .message {
   font-size: 1.5em;
   margin: 0;
 }
 
-/* line 184, ../scss/app.scss */
+/* line 186, ../scss/app.scss */
 .squares {
   border: 1px dotted #3b76a6;
   -webkit-border-radius: 5px;
@@ -5221,12 +5221,12 @@ header {
   padding: 5px 0;
   border-left-width: 0;
 }
-/* line 203, ../scss/app.scss */
+/* line 205, ../scss/app.scss */
 .squares:first-child {
   border-left-width: 1px;
 }
 
-/* line 211, ../scss/app.scss */
+/* line 213, ../scss/app.scss */
 .cpanel.button {
   width: 100%;
   -webkit-border-radius: 5px;
@@ -5239,7 +5239,7 @@ header {
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* line 222, ../scss/app.scss */
+/* line 224, ../scss/app.scss */
 .time {
   font-size: 1.2em;
   border-bottom: 1px dotted #3b76a6;
@@ -5247,25 +5247,25 @@ header {
   text-align: right;
 }
 
-/* line 237, ../scss/app.scss */
+/* line 239, ../scss/app.scss */
 .solved .solved {
   display: block;
 }
-/* line 243, ../scss/app.scss */
+/* line 245, ../scss/app.scss */
 .solved .unsolved {
   display: none;
 }
 
-/* line 253, ../scss/app.scss */
+/* line 255, ../scss/app.scss */
 .unsolved .solved {
   display: none;
 }
-/* line 259, ../scss/app.scss */
+/* line 261, ../scss/app.scss */
 .unsolved .unsolved {
   display: block;
 }
 
-/* line 269, ../scss/app.scss */
+/* line 271, ../scss/app.scss */
 .panel.current_user {
   background: #f6f8df;
 }

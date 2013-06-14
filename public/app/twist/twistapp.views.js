@@ -43,6 +43,8 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 				MyApp.vent.on("wrong_answer" , this.handleBadAnswer , this); 
 
+				MyApp.vent.on("correct_answer" , this.showSuccess , this); 
+
 			} , 
 
 			ui : {
@@ -51,23 +53,22 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 			} ,
 
-			// Clear input when the user starts typing to validate new input
+			showSuccess : function(obj) {  
 
-			clearMessage : function() {
+				this.$el.stop().css({"opacity" : 1 , "display" : 'block'}).removeClass("alert").addClass("alert-box success round flash-message").fadeOut(3000);
 
-				this.$el.removeClass("alert-box alert round");
-
-				this.ui.message_txt.html("");
+				this.ui.message_txt.html("Great Job, You Got: <strong>'" + obj.answer + "'</strong> Correct!");
 
 			} , 
+
 
 			// Shows errors in the message UI
 
 			showError : function(error) { 
 
-				this.$el.addClass("alert-box alert round");
+				this.$el.stop().css({"opacity" : 1 , "display" : 'block'}).removeClass("alert").addClass("alert-box alert round flash-message").fadeOut(1000);
 
-				this.ui.message_txt.html(error);
+				this.ui.message_txt.text(error);
 
 			} , 
 

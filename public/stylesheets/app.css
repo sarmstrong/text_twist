@@ -4311,14 +4311,14 @@ kbd {
 .panel {
   border-style: solid;
   border-width: 1px;
-  border-color: #d9d9d9;
+  border-color: #e6e6e6;
   margin-bottom: 1.25em;
   padding: 1.25em;
-  background: #f2f2f2;
+  background: white;
 }
 /* line 43, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_panels.scss */
 .panel h1, .panel h2, .panel h3, .panel h4, .panel h5, .panel h6, .panel p {
-  color: #333333;
+  color: #3b76a6;
 }
 /* line 47, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_panels.scss */
 .panel > :first-child {
@@ -5078,47 +5078,92 @@ table tfoot tr td {
 }
 
 /* line 9, ../scss/app.scss */
-body {
-  background-image: radial-gradient(#ffffff, #dddddd 1200px);
+html {
+  height: 100%;
 }
 
-/* line 16, ../scss/app.scss */
+/* line 14, ../scss/app.scss */
+body {
+  min-height: 100%;
+  background-image: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 1700, color-stop(0%, #ffffff), color-stop(100%, #9ec0dc));
+  background-image: -webkit-radial-gradient(#ffffff, #9ec0dc 1700px);
+  background-image: -moz-radial-gradient(#ffffff, #9ec0dc 1700px);
+  background-image: -o-radial-gradient(#ffffff, #9ec0dc 1700px);
+  background-image: radial-gradient(#ffffff, #9ec0dc 1700px);
+}
+
+/* line 23, ../scss/app.scss */
+header {
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #3b76a6), color-stop(100%, #6fa9d8));
+  background-image: -webkit-linear-gradient(top, #3b76a6, #6fa9d8);
+  background-image: -moz-linear-gradient(top, #3b76a6, #6fa9d8);
+  background-image: -o-linear-gradient(top, #3b76a6, #6fa9d8);
+  background-image: linear-gradient(top, #3b76a6, #6fa9d8);
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+/* line 34, ../scss/app.scss */
 .wrapper {
   margin-top: 20px;
 }
 
-/* line 23, ../scss/app.scss */
+/* line 41, ../scss/app.scss */
 .row .row {
   margin-bottom: 10px;
 }
 
-/* line 29, ../scss/app.scss */
+/* line 47, ../scss/app.scss */
 .panel {
   -webkit-box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eff6fb), color-stop(100%, #ffffff));
+  background-image: -webkit-linear-gradient(top, #eff6fb, #ffffff);
+  background-image: -moz-linear-gradient(top, #eff6fb, #ffffff);
+  background-image: -o-linear-gradient(top, #eff6fb, #ffffff);
+  background-image: linear-gradient(top, #eff6fb, #ffffff);
 }
 
-/* line 37, ../scss/app.scss */
+/* line 57, ../scss/app.scss */
 .logo h1 {
   margin: 0;
+  color: white;
+  font-size: 2.4em;
   font-weight: 400;
 }
 
-/* line 45, ../scss/app.scss */
+/* line 69, ../scss/app.scss */
 .logo h4 {
+  color: #ddd;
   margin-top: -10px;
   font-style: italic;
   margin-left: 20px;
+  font-size: 1.5em;
+  margin-bottom: -5px;
   font-weight: 200;
 }
 
-/* line 60, ../scss/app.scss */
-.userprofile-text {
-  font-size: .85em;
+/* line 90, ../scss/app.scss */
+.userprofile {
+  margin-top: 20px;
 }
 
-/* line 71, ../scss/app.scss */
+/* line 96, ../scss/app.scss */
+.userprofile-text {
+  font-size: .85em;
+  font-weight: 400;
+}
+
+/* line 104, ../scss/app.scss */
+.userprofile-text a {
+  color: #eee;
+  font-weight: 400;
+}
+
+/* line 117, ../scss/app.scss */
 .rules span {
   border-bottom: 2px solid #3b76a6;
   width: 100%;
@@ -5130,7 +5175,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* line 95, ../scss/app.scss */
+/* line 141, ../scss/app.scss */
 .circle-text {
   font-size: 1.8em;
   font-weight: 800;
@@ -5146,20 +5191,20 @@ body {
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* line 122, ../scss/app.scss */
+/* line 168, ../scss/app.scss */
 #messagePanel {
   margin-top: 10px;
 }
 
-/* line 128, ../scss/app.scss */
+/* line 174, ../scss/app.scss */
 .message {
   font-size: 1.5em;
   margin: 0;
 }
 
-/* line 138, ../scss/app.scss */
+/* line 184, ../scss/app.scss */
 .squares {
-  border: 1px solid #abbfcf;
+  border: 1px dotted #3b76a6;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -5170,15 +5215,18 @@ body {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
   padding: 5px 0;
   border-left-width: 0;
 }
-/* line 154, ../scss/app.scss */
+/* line 203, ../scss/app.scss */
 .squares:first-child {
   border-left-width: 1px;
 }
 
-/* line 162, ../scss/app.scss */
+/* line 211, ../scss/app.scss */
 .cpanel.button {
   width: 100%;
   -webkit-border-radius: 5px;
@@ -5186,35 +5234,38 @@ body {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
+  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* line 170, ../scss/app.scss */
+/* line 222, ../scss/app.scss */
 .time {
   font-size: 1.2em;
-  border-bottom: 1px solid #3b76a6;
+  border-bottom: 1px dotted #3b76a6;
   font-weight: bold;
   text-align: right;
 }
 
-/* line 185, ../scss/app.scss */
+/* line 237, ../scss/app.scss */
 .solved .solved {
   display: block;
 }
-/* line 191, ../scss/app.scss */
+/* line 243, ../scss/app.scss */
 .solved .unsolved {
   display: none;
 }
 
-/* line 201, ../scss/app.scss */
+/* line 253, ../scss/app.scss */
 .unsolved .solved {
   display: none;
 }
-/* line 207, ../scss/app.scss */
+/* line 259, ../scss/app.scss */
 .unsolved .unsolved {
   display: block;
 }
 
-/* line 217, ../scss/app.scss */
+/* line 269, ../scss/app.scss */
 .panel.current_user {
   background: #f6f8df;
 }

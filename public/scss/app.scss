@@ -6,9 +6,27 @@
 
 @import "foundation";
 
+html {
+
+	height: 100%;
+}
+
 body {
 
-	background-image : radial-gradient(#fff, #ddd 1200px);
+	min-height: 100%;
+
+	@include background-image(radial-gradient(#fff, lighten($primary-color , 30%) 1700px)) ;
+	//background: white;
+
+}
+
+header {
+
+	@include background-image(linear-gradient(top , $primary-color , saturate(lighten($primary-color , 20%) , 10%))); 
+
+	@include box-shadow(1px 1px 3px rgba(0,0,0,0.5));
+
+	color: white;
 
 }
 
@@ -30,6 +48,8 @@ body {
 	
 	@include box-shadow(2px 2px 8px rgba(0,0,0,0.3));
 
+	@include background-image(linear-gradient(top , saturate(lighten($primary-color , 52%) , 10%) , white ));  
+
 }
 
 // Logo
@@ -38,17 +58,27 @@ body {
 	
 	margin: 0; 
 
+	color: white;
+
+	font-size: 2.4em;
+
 	font-weight: 400;
 
 }
 
 .logo h4 {
 
+	color: #ddd;
+
 	margin-top: -10px;
 
 	font-style: italic;
 
 	margin-left: 20px;
+
+	font-size: 1.5em;
+
+	margin-bottom: -5px;
 
 	font-weight: 200;
 
@@ -57,9 +87,25 @@ body {
 
 // MODULE User Profile Panel
 
+.userprofile {
+
+	margin-top: 20px;
+
+}
+
 .userprofile-text {
 	
 	font-size : .85em;
+
+	font-weight: 400;
+
+}
+
+.userprofile-text a {
+
+	color: #eee;
+
+	font-weight: 400;
 
 }
 
@@ -137,7 +183,7 @@ body {
 
 .squares {
 	
-	border : 1px solid desaturate(lighten($primary-color , 30%) , 20%);
+	border : 1px dotted $primary-color;
 
 	@include border-radius(5px); 
 
@@ -147,9 +193,12 @@ body {
 
 	@include box-sizing(border-box);
 
+	@include box-shadow(1px 1px 3px rgba(0,0,0,0.1)); 
+
 	padding: 5px 0 ;
 
 	border-left-width: 0;
+
 
 	&:first-child {
 
@@ -165,13 +214,16 @@ body {
 
 	@include border-radius(5px);
 
+
+	@include box-shadow(1px 1px 3px rgba(0,0,0,0.3)); 
+
 }
 
 .time {
 	
 	font-size: 1.2em;
 
-	border-bottom: 1px solid $primary-color;
+	border-bottom: 1px dotted $primary-color;
 
 	font-weight: bold;
 

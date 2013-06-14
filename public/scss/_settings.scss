@@ -28,7 +28,9 @@ $font-smoothing: antialiased;
 // $text-direction: ltr;
 
 // We use these as default colors throughout
+
 $primary-color: #3B76A6;
+
 $secondary-color: #C76C13;
 // $alert-color: #c60f13;
 // $success-color: #5da423;
@@ -187,7 +189,7 @@ $header-font-color: #3B76A6;
 // $input-border-style: solid;
 // $input-border-width: 1px;
 // $input-disabled-bg: #ddd;
-// $input-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+$input-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
 
 // We use these to style the fieldset border and spacing.
 // $fieldset-border-style: solid;
@@ -649,7 +651,7 @@ $alert-radius: 5px;
 //
 
 // We use these to control the background and border styles
-// $panel-bg: darken(#fff, 5%);
+$panel-bg: white;
 // $panel-border-style: solid;
 // $panel-border-size: 1px;
 
@@ -662,7 +664,7 @@ $alert-radius: 5px;
 // $panel-padding: emCalc(20px);
 
 // We use these to set default font colors
-// $panel-font-color: #333;
+$panel-font-color: $primary-color;
 // $panel-font-color-alt: #fff;
 
 //

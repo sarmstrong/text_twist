@@ -257,7 +257,7 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 			} else {
 
-				MyApp.vent.trigger("wrong_answer" , "That answer is incorrect.");
+				MyApp.vent.trigger("wrong_answer" , "Sorry Dude, No Luck!");
 
 			}
 

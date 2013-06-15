@@ -1705,13 +1705,13 @@ blockquote p {
 }
 /* line 164, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_buttons.scss */
 .button.secondary {
-  background-color: #c76c13;
-  border-color: #98530f;
+  background-color: #ffaa57;
+  border-color: #ff9024;
   color: white;
 }
 /* line 112, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_buttons.scss */
 .button.secondary:hover, .button.secondary:focus {
-  background-color: #98530f;
+  background-color: #ff9024;
 }
 /* line 123, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_buttons.scss */
 .button.secondary:hover, .button.secondary:focus {
@@ -1811,8 +1811,8 @@ blockquote p {
 }
 /* line 177, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_buttons.scss */
 .button.disabled.secondary, .button[disabled].secondary {
-  background-color: #c76c13;
-  border-color: #98530f;
+  background-color: #ffaa57;
+  border-color: #ff9024;
   color: white;
   cursor: default;
   opacity: 0.6;
@@ -1821,7 +1821,7 @@ blockquote p {
 }
 /* line 112, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_buttons.scss */
 .button.disabled.secondary:hover, .button.disabled.secondary:focus, .button[disabled].secondary:hover, .button[disabled].secondary:focus {
-  background-color: #98530f;
+  background-color: #ff9024;
 }
 /* line 123, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_buttons.scss */
 .button.disabled.secondary:hover, .button.disabled.secondary:focus, .button[disabled].secondary:hover, .button[disabled].secondary:focus {
@@ -1829,7 +1829,7 @@ blockquote p {
 }
 /* line 134, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_buttons.scss */
 .button.disabled.secondary:hover, .button.disabled.secondary:focus, .button[disabled].secondary:hover, .button[disabled].secondary:focus {
-  background-color: #c76c13;
+  background-color: #ffaa57;
 }
 /* line 178, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_buttons.scss */
 .button.disabled.success, .button[disabled].success {
@@ -2657,7 +2657,7 @@ form.custom .custom.disabled {
 }
 /* line 78, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_split-buttons.scss */
 .split.button.secondary span {
-  border-left-color: #81460c;
+  border-left-color: #ff830b;
 }
 /* line 135, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_split-buttons.scss */
 .split.button.secondary span:before {
@@ -3107,11 +3107,11 @@ form.custom .custom.disabled {
 }
 /* line 226, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_top-bar.scss */
 .top-bar-section ul li > a.button.secondary {
-  background: #c76c13;
+  background: #ffaa57;
 }
 /* line 228, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_top-bar.scss */
 .top-bar-section ul li > a.button.secondary:hover {
-  background: #98530f;
+  background: #ff9024;
 }
 /* line 232, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_top-bar.scss */
 .top-bar-section ul li > a.button.success {
@@ -4096,8 +4096,8 @@ form.custom .custom.disabled {
 }
 /* line 103, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_alert-boxes.scss */
 .alert-box.secondary {
-  background-color: #c76c13;
-  border-color: #98530f;
+  background-color: #ffaa57;
+  border-color: #ff9024;
   color: white;
 }
 
@@ -4111,8 +4111,8 @@ form.custom .custom.disabled {
   list-style: none;
   border-style: solid;
   border-width: 1px;
-  background-color: #de7915;
-  border-color: #b05f11;
+  background-color: #ffb771;
+  border-color: #ff9d3e;
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
@@ -4224,7 +4224,7 @@ kbd {
 }
 /* line 78, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_labels.scss */
 .label.secondary {
-  background-color: #c76c13;
+  background-color: #ffaa57;
   color: #fff;
 }
 
@@ -4449,7 +4449,7 @@ kbd {
 }
 /* line 54, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_progress-bars.scss */
 .progress.secondary .meter {
-  background: #c76c13;
+  background: #ffaa57;
   height: 100%;
   display: block;
 }
@@ -5077,12 +5077,38 @@ table tfoot tr td {
   max-width: 800px;
 }
 
-/* line 11, ../scss/app.scss */
+@keyframes myfirst {
+  /* line 11, ../scss/app.scss */
+  from {
+    transform: rotateX(0);
+  }
+
+  /* line 13, ../scss/app.scss */
+  to {
+    transform: rotateX(360);
+  }
+}
+
+@-webkit-keyframes myfirst {
+  /* line 18, ../scss/app.scss */
+  from {
+    -webkit-transform: rotateY(180deg);
+    opacity: 0;
+  }
+
+  /* line 20, ../scss/app.scss */
+  to {
+    -webkit-transform: rotateY(360deg);
+    opacity: 1;
+  }
+}
+
+/* line 25, ../scss/app.scss */
 html {
   height: 100%;
 }
 
-/* line 16, ../scss/app.scss */
+/* line 30, ../scss/app.scss */
 body {
   min-height: 100%;
   background-image: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 1700, color-stop(0%, #ffffff), color-stop(100%, #9ec0dc));
@@ -5092,30 +5118,30 @@ body {
   background-image: radial-gradient(#ffffff, #9ec0dc 1700px);
 }
 
-/* line 25, ../scss/app.scss */
+/* line 39, ../scss/app.scss */
 header {
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #3b76a6), color-stop(100%, #6fa9d8));
-  background-image: -webkit-linear-gradient(top, #3b76a6, #6fa9d8);
-  background-image: -moz-linear-gradient(top, #3b76a6, #6fa9d8);
-  background-image: -o-linear-gradient(top, #3b76a6, #6fa9d8);
-  background-image: linear-gradient(top, #3b76a6, #6fa9d8);
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #3b76a6), color-stop(100%, #2e5b80));
+  background-image: -webkit-linear-gradient(top, #3b76a6, #2e5b80);
+  background-image: -moz-linear-gradient(top, #3b76a6, #2e5b80);
+  background-image: -o-linear-gradient(top, #3b76a6, #2e5b80);
+  background-image: linear-gradient(top, #3b76a6, #2e5b80);
   -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
   color: white;
 }
 
-/* line 36, ../scss/app.scss */
+/* line 50, ../scss/app.scss */
 .wrapper {
   margin-top: 20px;
 }
 
-/* line 43, ../scss/app.scss */
+/* line 57, ../scss/app.scss */
 .row .row {
   margin-bottom: 10px;
 }
 
-/* line 49, ../scss/app.scss */
+/* line 63, ../scss/app.scss */
 .panel {
   -webkit-box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
@@ -5127,7 +5153,16 @@ header {
   background-image: linear-gradient(top, #eff6fb, #ffffff);
 }
 
-/* line 59, ../scss/app.scss */
+/* line 71, ../scss/app.scss */
+.button {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+}
+
+/* line 79, ../scss/app.scss */
 .logo h1 {
   margin: 0;
   color: white;
@@ -5135,9 +5170,9 @@ header {
   font-weight: 400;
 }
 
-/* line 71, ../scss/app.scss */
+/* line 91, ../scss/app.scss */
 .logo h4 {
-  color: #ddd;
+  color: #ffaa57;
   margin-top: -10px;
   font-style: italic;
   margin-left: 20px;
@@ -5146,36 +5181,38 @@ header {
   font-weight: 200;
 }
 
-/* line 92, ../scss/app.scss */
+/* line 112, ../scss/app.scss */
 .userprofile {
   margin-top: 20px;
 }
 
-/* line 98, ../scss/app.scss */
+/* line 118, ../scss/app.scss */
 .userprofile-text {
   font-size: .85em;
   font-weight: 400;
 }
 
-/* line 106, ../scss/app.scss */
+/* line 126, ../scss/app.scss */
 .userprofile-text a {
-  color: #eee;
+  color: #ffaa57;
   font-weight: 400;
 }
 
-/* line 119, ../scss/app.scss */
+/* line 139, ../scss/app.scss */
 .rules span {
   border-bottom: 2px solid #3b76a6;
   width: 100%;
+  font-weight: 800;
   display: block;
   padding-top: 20px;
   padding-bottom: 5px;
   font-size: 2em;
   text-align: center;
   margin-bottom: 20px;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
 }
 
-/* line 143, ../scss/app.scss */
+/* line 169, ../scss/app.scss */
 .circle-text {
   font-size: 1.8em;
   font-weight: 800;
@@ -5191,55 +5228,76 @@ header {
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* line 170, ../scss/app.scss */
+/* line 196, ../scss/app.scss */
 #messagePanel {
   margin-top: 10px;
 }
 
-/* line 176, ../scss/app.scss */
+/* line 202, ../scss/app.scss */
 .message {
   font-size: 1.5em;
   margin: 0;
 }
 
-/* line 186, ../scss/app.scss */
+/* line 212, ../scss/app.scss */
 .squares {
+  margin-bottom: 3px;
+  padding: 5px 0;
   border: 1px dotted #3b76a6;
+  border-left-width: 0;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
   font-size: 1.5em;
-  margin-bottom: 3px;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 5px 0;
-  border-left-width: 0;
 }
-/* line 205, ../scss/app.scss */
+/* line 230, ../scss/app.scss */
 .squares:first-child {
   border-left-width: 1px;
 }
 
-/* line 213, ../scss/app.scss */
-.cpanel.button {
+/* line 239, ../scss/app.scss */
+.solved-answer {
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #3b76a6), color-stop(100%, #5290c2));
+  background-image: -webkit-linear-gradient(top, #3b76a6, #5290c2);
+  background-image: -moz-linear-gradient(top, #3b76a6, #5290c2);
+  background-image: -o-linear-gradient(top, #3b76a6, #5290c2);
+  background-image: linear-gradient(top, #3b76a6, #5290c2);
+  color: #ffaa57;
+  font-weight: 800;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  border-color: #19191A;
+  -webkit-animation-name: myfirst;
+  /* Safari and Chrome */
+  animation-name: myfirst;
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-perspective: 1200px;
+  perpspective: 1200px;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+/* line 281, ../scss/app.scss */
+.cpanel {
   width: 100%;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
   -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* line 224, ../scss/app.scss */
+/* line 292, ../scss/app.scss */
 .time {
   font-size: 1.2em;
   border-bottom: 1px dotted #3b76a6;
@@ -5247,25 +5305,25 @@ header {
   text-align: right;
 }
 
-/* line 239, ../scss/app.scss */
+/* line 307, ../scss/app.scss */
 .solved .solved {
   display: block;
 }
-/* line 245, ../scss/app.scss */
+/* line 313, ../scss/app.scss */
 .solved .unsolved {
   display: none;
 }
 
-/* line 255, ../scss/app.scss */
+/* line 323, ../scss/app.scss */
 .unsolved .solved {
   display: none;
 }
-/* line 261, ../scss/app.scss */
+/* line 329, ../scss/app.scss */
 .unsolved .unsolved {
   display: block;
 }
 
-/* line 271, ../scss/app.scss */
+/* line 339, ../scss/app.scss */
 .panel.current_user {
   background: #f6f8df;
 }

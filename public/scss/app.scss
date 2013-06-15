@@ -6,6 +6,20 @@
 
 @import "foundation";
 
+@keyframes myfirst
+	{
+		from {transform: rotateX(0);}
+
+		to {transform: rotateX(360);}
+	}
+
+@-webkit-keyframes myfirst /* Safari and Chrome */
+{
+	from {-webkit-transform: rotateY(180deg);  opacity:0}
+
+	to {-webkit-transform: rotateY(360deg); opacity: 1}
+}
+
 
 
 html {
@@ -24,7 +38,7 @@ body {
 
 header {
 
-	@include background-image(linear-gradient(top , $primary-color , saturate(lighten($primary-color , 20%) , 10%))); 
+	@include background-image(linear-gradient(top , $primary-color , saturate(darken($primary-color , 10%) , 0%))); 
 
 	@include box-shadow(1px 1px 3px rgba(0,0,0,0.5));
 
@@ -54,6 +68,12 @@ header {
 
 }
 
+.button {
+
+	@include border-radius(5px);
+
+}
+
 // Logo
 
 .logo h1 {
@@ -70,7 +90,7 @@ header {
 
 .logo h4 {
 
-	color: #ddd;
+	color: $secondary-color;
 
 	margin-top: -10px;
 
@@ -105,7 +125,7 @@ header {
 
 .userprofile-text a {
 
-	color: #eee;
+	color: $secondary-color;
 
 	font-weight: 400;
 
@@ -122,6 +142,10 @@ header {
 
 	width: 100%;
 
+	//color: $secondary-color;
+
+	font-weight: 800;
+
 	//background: white; 
 
 	display: block;
@@ -134,7 +158,9 @@ header {
 
 	text-align: center;
 
-	margin-bottom: 20px
+	margin-bottom: 20px; 
+
+	@include text-shadow(1px 1px 5px rgba(0,0,0,0.3));
 
 }
 
@@ -184,23 +210,22 @@ header {
 // MODULE AnwersSet
 
 .squares {
+
+	margin-bottom: 3px;
+
+	padding: 5px 0 ;
 	
 	border : 1px dotted $primary-color;
 
+	border-left-width: 0;
+
 	@include border-radius(5px); 
 
-	font-size: 1.5em ; 
-
-	margin-bottom: 3px;
+	font-size: 1.5em ; 	
 
 	@include box-sizing(border-box);
 
 	@include box-shadow(1px 1px 3px rgba(0,0,0,0.1)); 
-
-	padding: 5px 0 ;
-
-	border-left-width: 0;
-
 
 	&:first-child {
 
@@ -210,11 +235,54 @@ header {
 
 }
 
-.cpanel.button {
+
+.solved-answer {
+
+	@include background-image(linear-gradient(top , $primary-color , saturate(lighten($primary-color , 10%) , 0%))); 
+
+	color: $secondary-color;
+
+	font-weight: 800;
+
+	@include text-shadow(1px 1px 3px rgba(0,0,0,0.3));
+
+	border-color: #19191A;
+
+	-webkit-animation-name: myfirst ; /* Safari and Chrome */
+
+	animation-name: myfirst;
+
+	-webkit-animation-duration: .5s;
+
+	animation-duration: .5s;
+
+    -webkit-animation-timing-function: linear;
+
+    animation-timing-function: linear;
+
+	-webkit-transform-style: preserve-3d;
+
+	transform-style: preserve-3d;
+
+	-webkit-perspective: 1200px;
+
+	perpspective: 1200px;
+
+	-webkit-animation-fill-mode: forwards;
+
+	animation-fill-mode: forwards;
+
+
+
+}
+
+
+
+.cpanel {
 	
 	width: 100%;
 
-	@include border-radius(5px);
+	
 
 
 	@include box-shadow(1px 1px 3px rgba(0,0,0,0.3)); 

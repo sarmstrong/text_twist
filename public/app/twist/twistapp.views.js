@@ -57,7 +57,7 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 				this.$el.stop().css({"opacity" : 1 , "display" : 'block'}).removeClass("alert").addClass("alert-box success round flash-message").fadeOut(3000);
 
-				this.ui.message_txt.html("Great Job, You Got: <strong>'" + obj.answer + "'</strong> Correct!");
+				this.ui.message_txt.html("Great Job, You got <strong>'" + obj.answer + "'</strong> correct!");
 
 			} , 
 

@@ -5297,7 +5297,7 @@ header {
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* line 292, ../scss/app.scss */
+/* line 289, ../scss/app.scss */
 .time {
   font-size: 1.2em;
   border-bottom: 1px dotted #3b76a6;
@@ -5305,25 +5305,25 @@ header {
   text-align: right;
 }
 
-/* line 307, ../scss/app.scss */
+/* line 304, ../scss/app.scss */
 .solved .solved {
   display: block;
 }
-/* line 313, ../scss/app.scss */
+/* line 310, ../scss/app.scss */
 .solved .unsolved {
   display: none;
 }
 
-/* line 323, ../scss/app.scss */
+/* line 320, ../scss/app.scss */
 .unsolved .solved {
   display: none;
 }
-/* line 329, ../scss/app.scss */
+/* line 326, ../scss/app.scss */
 .unsolved .unsolved {
   display: block;
 }
 
-/* line 339, ../scss/app.scss */
+/* line 336, ../scss/app.scss */
 .panel.current_user {
   background: #f6f8df;
 }

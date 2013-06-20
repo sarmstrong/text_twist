@@ -1,0 +1,32 @@
+{
+  "name": "my-project",
+
+  "version": "1.0.0",
+
+  "main": "path/to/main.css",
+
+  "dependencies" : {
+
+    "jquery" : "~1.9.1", 
+
+    "jquery-color" : "~2.1.0" , 
+
+    "foundation": "~4.0.0" , 
+
+    "backbone": "~0.9.10",
+
+    "underscore": "~1.4.4" , 
+
+    "marionette" : "~1.0.3"
+
+  } , 
+
+  "ignore": [
+
+    ".jshintrc",
+
+    "**/*.txt"
+
+  ]
+  
+}

@@ -129,6 +129,10 @@ TwistApp.module("Game" , function(Game ,  MyApp , Backbone , Marionette , $ , _ 
 
 			this.app_layout.render();
 
+			this.modals_layout = new MyApp.Layout.AppModals();
+
+			this.modals_layout.render();
+
 		} , 
 
 		setGameStatus : function(game_status) { 

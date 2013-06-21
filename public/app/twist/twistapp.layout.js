@@ -103,20 +103,41 @@ TwistApp.module("Layout" , function(Layout , MyApp , Backbone , Marionette , $ ,
 
 				this.interface_layout.show(new MyApp.Layout.GameInterface());
 
-				this.end_screen.show(new MyApp.Views.EndScreen());
+				//this.end_screen.show(new MyApp.Views.EndScreen());
 
 				this.challenge_screen.show(new MyApp.Views.ChallengeScreen());
 
-				this.multiplayer_end_screen.show(new MyApp.Views.MultiPlayerEndScreen());
+				//this.multiplayer_end_screen.show(new MyApp.Views.MultiPlayerEndScreen());
 
 				this.server_offline.show(new MyApp.Views.ServerOffline());
 
 			} 
 
-
-
-
 		});
+
+		Layout.AppModals = Backbone.Marionette.Layout.extend({ 
+
+			el : ".modals" , 
+
+			template : "#modalsLayout" ,
+
+			regions : {
+
+				end_screen: "#endScreen" ,
+
+				multiplayer_end_screen : "#multiPlayerEndScreen"
+
+			} , 
+
+			onRender : function() { 
+
+				this.end_screen.show(new MyApp.Views.EndScreen());
+
+				this.multiplayer_end_screen.show(new MyApp.Views.MultiPlayerEndScreen());
+
+			}
+
+		})
 
 
 

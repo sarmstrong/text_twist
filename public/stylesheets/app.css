@@ -3579,11 +3579,11 @@ form.custom .custom.disabled {
   background-color: #fff;
   margin-left: -40%;
   width: 80%;
-  background-color: white;
+  background-color: transparent;
   padding: 1.25em;
-  border: solid 1px #666666;
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  border: solid 0 #666666;
+  -webkit-box-shadow: none;
+  box-shadow: none;
   top: 50px;
 }
 /* line 60, ../../../../../../.rvm/gems/ruby-1.9.3-p194/gems/zurb-foundation-4.0.3/scss/foundation/components/_reveal.scss */

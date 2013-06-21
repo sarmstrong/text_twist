@@ -544,7 +544,7 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 				MyApp.vent.on("timeUp" , this.showUnsolved , this);
 
-				$(this.el).hide();
+				//$(this.el).hide();
 
 			} ,
 
@@ -567,7 +567,7 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 				$(this.el).removeClass('unsolved').addClass("solved");
 
-				$(this.el).show();
+				this.show();
 
 			} , 
 
@@ -577,14 +577,19 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 				$(this.el).removeClass('solved').addClass("unsolved");
 
-				$(this.el).show();
+				this.show();
 
 
 			} ,
 
+			show : function() { 
+
+				$(this.el).parent().foundation("reveal" , "open"); 
+			} , 
+
 			hide : function() {
 
-				$(this.el).hide();
+				$(this.el).parent().foundation("reveal" , "close");
 
 			}
 

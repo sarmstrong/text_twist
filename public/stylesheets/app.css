@@ -5228,18 +5228,24 @@ header {
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* line 197, ../scss/app.scss */
+/* line 195, ../scss/app.scss */
+.submit-answer {
+  margin-top: 20px;
+  float: right;
+}
+
+/* line 205, ../scss/app.scss */
 #messagePanel {
   margin-top: 10px;
 }
 
-/* line 203, ../scss/app.scss */
+/* line 211, ../scss/app.scss */
 .message {
   font-size: 1.5em;
   margin: 0;
 }
 
-/* line 213, ../scss/app.scss */
+/* line 221, ../scss/app.scss */
 .squares {
   margin-bottom: 3px;
   padding: 5px 0;
@@ -5258,12 +5264,12 @@ header {
   -moz-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
-/* line 231, ../scss/app.scss */
+/* line 239, ../scss/app.scss */
 .squares:first-child {
   border-left-width: 1px;
 }
 
-/* line 240, ../scss/app.scss */
+/* line 248, ../scss/app.scss */
 .solved-answer {
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #3b76a6), color-stop(100%, #5290c2));
   background-image: -webkit-linear-gradient(top, #3b76a6, #5290c2);
@@ -5289,7 +5295,7 @@ header {
   animation-fill-mode: forwards;
 }
 
-/* line 282, ../scss/app.scss */
+/* line 290, ../scss/app.scss */
 .cpanel {
   width: 100%;
   -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
@@ -5297,7 +5303,7 @@ header {
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* line 290, ../scss/app.scss */
+/* line 298, ../scss/app.scss */
 .time {
   font-size: 1.2em;
   border-bottom: 1px dotted #3b76a6;
@@ -5305,30 +5311,30 @@ header {
   text-align: right;
 }
 
-/* line 305, ../scss/app.scss */
+/* line 313, ../scss/app.scss */
 .solved .solved {
   display: block;
 }
-/* line 311, ../scss/app.scss */
+/* line 319, ../scss/app.scss */
 .solved .unsolved {
   display: none;
 }
 
-/* line 321, ../scss/app.scss */
+/* line 329, ../scss/app.scss */
 .unsolved .solved {
   display: none;
 }
-/* line 327, ../scss/app.scss */
+/* line 335, ../scss/app.scss */
 .unsolved .unsolved {
   display: block;
 }
 
-/* line 337, ../scss/app.scss */
+/* line 345, ../scss/app.scss */
 .panel.current_user {
   background: #f6f8df;
 }
 
-/* line 345, ../scss/app.scss */
+/* line 353, ../scss/app.scss */
 .challengeContainer {
   overflow: hidden;
   height: 0;
@@ -5338,27 +5344,27 @@ header {
   transition: height 0.6s ease-out;
 }
 
-/* line 355, ../scss/app.scss */
+/* line 363, ../scss/app.scss */
 .challengeContainer.active {
   height: 150px;
 }
 
-/* line 363, ../scss/app.scss */
+/* line 371, ../scss/app.scss */
 .challengeContainer.inactive {
   height: 0;
 }
 
-/* line 370, ../scss/app.scss */
+/* line 378, ../scss/app.scss */
 h3.challenge-title {
   margin-bottom: 0;
 }
 
-/* line 376, ../scss/app.scss */
+/* line 384, ../scss/app.scss */
 p.challenge-text {
   margin-bottom: 10px;
 }
 
-/* line 382, ../scss/app.scss */
+/* line 390, ../scss/app.scss */
 .challenge-buttons {
   margin-bottom: 0;
 }

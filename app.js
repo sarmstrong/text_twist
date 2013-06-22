@@ -60,15 +60,15 @@ app.configure(function() {
 
 	app.use(cookieParser);
 
-  	app.use(express.session({ 
+	app.use(express.session({
 
       store: new RedisStore({client: client}), 
 
       maxAge  : new Date(Date.now() + 3600000), //1 Hour
 
-      expires : new Date(Date.now() + 3600000), //1 Hour
+      expires : new Date(Date.now() + 3600000) //1 Hour
 
-  	}));
+	}));
 
 	app.use(app.router);
 
@@ -96,12 +96,12 @@ app.post('/login' , function(req , res){
 
 		req.session.username = req.body.username; 
 
-	}; 
+	}
 
 	res.redirect("/");
 
 
-})
+});
 
 app.get('/logout' , function(req , res){
 
@@ -111,7 +111,7 @@ app.get('/logout' , function(req , res){
 
 	}); 
 
-})
+});
 
 // Client model and client collection
 // Is used to keep a list of active sockets
@@ -212,13 +212,15 @@ var updateGame = function(data) {
 
 		// Which player score, could be refactored more cleanly
 
+		var player_score_num;
+
 		if (game[0].get("player_one") === data.player) {
 
-			var player_score_num = "player_one_score";
+			player_score_num = "player_one_score";
 
 		} else {
 
-			var player_score_num = "player_two_score";
+			player_score_num = "player_two_score";
 
 		}
 
@@ -278,73 +280,75 @@ sessionSockets.on('connection', function (err , socket , session) {
 
 	if (err !== null) {
 
-		console.log(err);
+		socket.emit("server_error" , {msg: err});
 
-		console.log(socket);
+	} else {
 
-	}
+		clients.add({player : socket.id , username: session.username});
 
-	clients.add({player : socket.id , username: session.username});
+		// Update the user with their session id
 
-	// Update the user with their session id
+		socket.emit('user', { id: socket.id});
 
-	socket.emit('user', { id: socket.id});
+		socket.emit('users_updated' , JSON.stringify(clients));
 
-	socket.emit('users_updated' , JSON.stringify(clients));
-
-	// Broadcasts that a new player is online
-
-	socket.broadcast.emit('users_updated' , JSON.stringify(clients)); 
-
-	// Removes client from client collection
-
-	socket.on('disconnect' , function() {
-
-		var models = clients.where({player : socket.id});
-
-		clients.remove(models[0]);
-
-		console.log("disconnect");
+		// Broadcasts that a new player is online
 
 		socket.broadcast.emit('users_updated' , JSON.stringify(clients)); 
 
-	});
+		// Removes client from client collection
 
-	/// Sends a challenge request
+		socket.on('disconnect' , function() {
 
-	socket.on("request_challenge" , function(data){
+			var models = clients.where({player : socket.id});
 
-		io.sockets.sockets[data.id].emit("challenge_requested" , { id: socket.id });
+			clients.remove(models[0]);
 
-	}); 
+			console.log("disconnect");
 
-	// Notify users that a challenge has been accepted
+			socket.broadcast.emit('users_updated' , JSON.stringify(clients)); 
 
-	socket.on("challenge_accepted" , function(data){
+		});
 
-		// Create a new game model and add it to the games collections
+		/// Sends a challenge request
 
-		var new_game = NewGame(data);
+		socket.on("request_challenge" , function(data){
 
-		games.add(new_game);
+			io.sockets.sockets[data.id].emit("challenge_requested" , { id: socket.id });
 
-		// Send updates to both players
+		}); 
 
-		io.sockets.sockets[data.player_one].emit("start_challenge" , JSON.stringify(new_game)); 
+		// Notify users that a challenge has been accepted
 
-		io.sockets.sockets[data.player_two].emit("start_challenge" , JSON.stringify(new_game));
+		socket.on("challenge_accepted" , function(data){
 
-	});
+			// Create a new game model and add it to the games collections
 
-	// Send a game update that will update the game boards/score
+			var new_game = NewGame(data);
 
-	socket.on("game_update" , function(data){
+			games.add(new_game);
 
-		var update = updateGame(data);
+			// Send updates to both players
 
-		sendUpdate(data , update);
+			io.sockets.sockets[data.player_one].emit("start_challenge" , JSON.stringify(new_game)); 
 
-	});
+			io.sockets.sockets[data.player_two].emit("start_challenge" , JSON.stringify(new_game));
+
+		});
+
+		// Send a game update that will update the game boards/score
+
+		socket.on("game_update" , function(data){
+
+			var update = updateGame(data);
+
+			sendUpdate(data , update);
+
+		});
+
+	}
+
+	
 
 });
 

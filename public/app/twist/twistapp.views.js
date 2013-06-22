@@ -24,7 +24,28 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 				this.model.on("change:options" , this.render);
 
+			}  , 
+
+			events : {
+
+				"click div.circle-text" : "handleClick" , 
+
+				"click .submit-answer" : "handleSubmit"
+
+			}  , 
+
+			handleClick : function(e) {
+
+				MyApp.vent.trigger("validateInput" , $(e.target).text());
+
+			} , 
+
+			handleSubmit : function(e) {
+
+				MyApp.vent.trigger("checkAnswer");	
+
 			}
+
 
 		});
 

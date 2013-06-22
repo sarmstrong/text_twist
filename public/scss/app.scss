@@ -74,6 +74,7 @@ header {
 
 }
 
+
 // Logo
 
 .logo h1 {
@@ -339,11 +340,48 @@ header {
 
 }
 
-/// Modals 
+/// MODULE Challenge Screen 
 
-.reveal-modal {
+.challengeContainer {
+
+	overflow: hidden;
+
+	height: 0;
+
+	@include transition(height  0.6s  ease-out);
+
+}
+
+.challengeContainer.active {
+
+	height: 150px;
 
 	
+
+}
+
+.challengeContainer.inactive {
+
+	height: 0;
+
+
+}
+
+h3.challenge-title {
+
+	margin-bottom: 0;
+
+}
+
+p.challenge-text {
+
+	margin-bottom: 10px;
+
+}
+
+.challenge-buttons {
+
+	margin-bottom: 0;
 
 }
 

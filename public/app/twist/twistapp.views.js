@@ -424,6 +424,7 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 			player_one : null,
 
+			className : "challengeContainer inactive" , 
 
 			initialize : function() { 
 
@@ -446,9 +447,9 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 			challengeAccepted : function() {
 
-				$(this.el).hide(); 
-
 				MyApp.vent.trigger("challenge_accepted" , {player_one: this.player_one , player_two : MyApp.user_id});
+
+				this.hide();
 
 			} ,
 
@@ -456,14 +457,14 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 				this.player_one = data.id;
 
-				$(this.el).show();
+				$(this.el).removeClass("inactive").addClass("active");
 
 			}, 
 
 
 			hide : function() {
 
-				$(this.el).hide();
+				$(this.el).removeClass("active").addClass("inactive");
 
 			}
 
@@ -627,14 +628,7 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 				MyApp.vent.trigger("playAgain");
 
-			} , 
-
-
-			hide : function() {
-
-				$(this.el).hide();
-
-			}, 
+			} ,
 
 			showSolved : function() { 
 
@@ -642,7 +636,7 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 				$(this.el).removeClass('unsolved').addClass("solved");
 
-				$(this.el).show();
+				this.show();
 
 			} , 
 
@@ -652,7 +646,18 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 				$(this.el).removeClass('solved').addClass("unsolved");
 
-				$(this.el).show();
+				this.show();
+
+			} ,
+
+			show : function() { 
+
+				$(this.el).parent().foundation("reveal" , "open"); 
+			} , 
+
+			hide : function() {
+
+				$(this.el).parent().foundation("reveal" , "close");
 
 			} , 
 

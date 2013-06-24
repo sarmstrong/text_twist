@@ -44,7 +44,36 @@ var RedisStore = require('connect-redis')(express);
 
 var redis = require("redis");
 
-var client = redis.createClient();
+if (app.settings.env === "development") {
+
+	var client = redis.createClient();
+
+
+} else if (app.settings.env === "production") {
+
+	var port = process.env.REDIS_PORT; 
+
+	var host = process.env.REDIS_HOST; 
+
+	var auth = process.env.REDIS_AUTH;  
+
+	var client = redis.createClient(parseInt(port) , host);
+
+	client.auth(auth , function(err) {
+
+		if (err) {
+
+			console.log(err);
+
+		}
+
+	})
+
+}
+
+
+
+
 
 var sessionStore = new RedisStore({client: client}); 
 
@@ -75,8 +104,6 @@ app.configure(function() {
 	app.set('views', __dirname + '/views');
 
     app.set('view engine', 'ejs');
-
-
   
 
 	app.use(express.static(path.join(__dirname, 'public')));
@@ -347,8 +374,6 @@ sessionSockets.on('connection', function (err , socket , session) {
 		});
 
 	}
-
-	
 
 });
 

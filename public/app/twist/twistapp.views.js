@@ -478,10 +478,11 @@ TwistApp.module("Views" , function(Views , MyApp , Backbone , Marionette , $ , _
 
 				this.player_one = data.id;
 
+				
+
 				$(this.el).removeClass("inactive").addClass("active");
 
 			}, 
-
 
 			hide : function() {
 

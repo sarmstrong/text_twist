@@ -1,4 +1,3 @@
-
 exports.index = function(req, res){
 
   if (req.session.username === undefined) {

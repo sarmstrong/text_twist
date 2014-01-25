@@ -1,60 +1,32 @@
 {
   "name": "Text_Twist",
-
-  "version": "0.1.2",
-
+  "version": "0.1.2-2",
   "subdomain": "text-twist-multi-player",
-
   "scripts": {
-
     "start": "app.js"
-
   },
-
   "engines": {
-
     "node": "0.8.x",
-
     "npm": "1.1.x"
-
   },
-
   "dependencies": {
-
     "socket.io": "~0.9.14",
-
     "session.socket.io": "0.1.x",
-
     "express": "~3.2.0",
-
-    "redis" : "~0.8.3", 
-
-    "connect-redis" : "~1.4.5", 
-
-    "ejs": "~0.8.4", 
-
+    "redis": "~0.8.3",
+    "connect-redis": "~1.4.5",
+    "ejs": "~0.8.4",
     "backbone": "~0.9.10",
-
     "underscore": "~1.4.4",
-
     "uuid": "~1.4.1"
-
   },
-
   "devDependencies": {
-
     "mocha": "~1.9.0",
-
-    "sinon" : "~1.7.2", 
-
-    "should" : "~1.2.2",
-
-    "grunt-mocha-test": "~0.5.0" , 
-
-    "grunt" : "~0.4.0",
-
-    "grunt-contrib-jshint": "~0.2.0"
-
+    "sinon": "~1.7.2",
+    "should": "~1.2.2",
+    "grunt-mocha-test": "~0.5.0",
+    "grunt": "~0.4.0",
+    "grunt-contrib-jshint": "~0.2.0",
+    "grunt-contrib-watch": "~0.4.4"
   }
-
 }
